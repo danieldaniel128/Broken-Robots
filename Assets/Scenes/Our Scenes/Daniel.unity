@@ -557,58 +557,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 657785203, guid: 142f005f041247f4aba03da033431397, type: 3}
-      propertyPath: m_Speed
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 657785203, guid: 142f005f041247f4aba03da033431397, type: 3}
-      propertyPath: m_Acceleration
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 657785203, guid: 142f005f041247f4aba03da033431397, type: 3}
-      propertyPath: m_AngularSpeed
-      value: 11.71
-      objectReference: {fileID: 0}
-    - target: {fileID: 3552405094001790304, guid: 142f005f041247f4aba03da033431397,
-        type: 3}
-      propertyPath: _grid
-      value: 
-      objectReference: {fileID: 1874247624}
-    - target: {fileID: 3552405094001790304, guid: 142f005f041247f4aba03da033431397,
-        type: 3}
-      propertyPath: _speed
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 3552405094001790304, guid: 142f005f041247f4aba03da033431397,
-        type: 3}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 461608644426591637}
-    - target: {fileID: 3552405094001790304, guid: 142f005f041247f4aba03da033431397,
-        type: 3}
-      propertyPath: _maxSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3552405094001790304, guid: 142f005f041247f4aba03da033431397,
-        type: 3}
-      propertyPath: _minSpeed
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 3552405094001790304, guid: 142f005f041247f4aba03da033431397,
-        type: 3}
-      propertyPath: _scanRadius
-      value: 35.17
-      objectReference: {fileID: 0}
-    - target: {fileID: 3552405094001790304, guid: 142f005f041247f4aba03da033431397,
-        type: 3}
-      propertyPath: _acceleration
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3552405094001790304, guid: 142f005f041247f4aba03da033431397,
-        type: 3}
-      propertyPath: _targetLayer.m_Bits
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 4435055155585234222, guid: 142f005f041247f4aba03da033431397,
         type: 3}
       propertyPath: m_Name
@@ -622,7 +570,7 @@ PrefabInstance:
     - target: {fileID: 8545554640883441696, guid: 142f005f041247f4aba03da033431397,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.0100493
+      value: -9.4
       objectReference: {fileID: 0}
     - target: {fileID: 8545554640883441696, guid: 142f005f041247f4aba03da033431397,
         type: 3}
