@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChaseState : MonoBehaviour
+public class ChaseState : AIState
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void EnterState(StateMachine stateMachine)
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void ExitState(StateMachine stateMachine)
     {
-        
+
+    }
+
+    public override void UpdateState(StateMachine stateMachine)
+    {
+
     }
 }
