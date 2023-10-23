@@ -1,28 +1,38 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 public class StateMachine : MonoBehaviour
 {
     public NavMeshAgent Agent;
+    public List<AIState> AIStates;
     public AIState CurrentState { get; private set; }
+    public Transform Target { get; set; }
     public Vector3[] PatrolPoints { get; private set; }
     public Vector3 PatrolStartPoint { get; private set; }
 
+
+
+    [Header("Patrol Parameters")]
     [SerializeField] private float _patrolRange;
 
-    [Header("physics parameters")]
+    [Header("Scan Parameters")]
+    public float ScanRadius;
+    public LayerMask TargetLayer;
+
+    [Header("Physics Parameters")]
     [SerializeField] float _minSpeed;
     [SerializeField] float _maxSpeed;
     [SerializeField] float _acceleration;
-
 
     Action OnSecondFrame;
 
     private void Start()
     {
-        SetFirstState();
+        SetStateList();
+        SetFirstCurrentState();
         InitMovementphysics();
     }
 
@@ -66,13 +76,37 @@ public class StateMachine : MonoBehaviour
         OnSecondFrame += ChangeAcceleration;
     }
 
-    void SetFirstState()
+    void SetFirstCurrentState()
+    {
+        CurrentState = AIStates.Find(c => c is PatrolState);
+        CurrentState.EnterState(this);
+    }
+    void SetPatrolState()
     {
         PatrolStartPoint = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         SetPatrolPoints();
-        CurrentState = new PatrolState(PatrolPoints);
-        CurrentState.EnterState(this);
-
+        AIStates.Add(new PatrolState(PatrolPoints));
     }
+    void SetScanState()
+    {
+        AIStates.Add(new ScanState());
+    }
+    void SetAttackState()
+    {
+        AIStates.Add(new AttackState());
+    }
+    void SetChaseState()
+    {
+        AIStates.Add(new ChaseState());
+    }
+    void SetStateList()
+    {
+        AIStates = new List<AIState>();
+        SetPatrolState();
+        SetScanState();
+        SetAttackState();
+        SetChaseState();
+    }
+
     #endregion
 }

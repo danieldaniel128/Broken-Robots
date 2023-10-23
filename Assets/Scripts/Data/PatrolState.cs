@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class PatrolState : AIState
 {
@@ -32,5 +33,8 @@ public class PatrolState : AIState
             _patrolCounter++;
             stateMachine.Agent.SetDestination(_patrolPoints[_currentPatrolIndex]);
         }
+        stateMachine.ChangeState(stateMachine.AIStates.Find(c => c is ScanState));
     }
+
+
 }
