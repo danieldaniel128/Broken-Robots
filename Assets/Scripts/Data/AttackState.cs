@@ -16,6 +16,8 @@ public class AttackState : AIState
 
     public override void UpdateState(StateMachine stateMachine)
     {
+        if(Vector3.Distance(stateMachine.transform.position, stateMachine.Target.position) >= stateMachine.AttackRadius + 0.5f)
+            stateMachine.ChangeState(stateMachine.AIStates.Find(c => c is ChaseState));
 
     }
 }

@@ -20,12 +20,17 @@ public class StateMachine : MonoBehaviour
 
     [Header("Scan Parameters")]
     public float ScanRadius;
+    public float ChaseRadius;
+    public float CurrentSearchRadius;
     public LayerMask TargetLayer;
 
     [Header("Physics Parameters")]
     [SerializeField] float _minSpeed;
     [SerializeField] float _maxSpeed;
     [SerializeField] float _acceleration;
+
+    [Header("Attack Parameters")]
+    public float AttackRadius;
 
     Action OnSecondFrame;
 
@@ -47,6 +52,7 @@ public class StateMachine : MonoBehaviour
         CurrentState.ExitState(this);
         CurrentState = newState;
         CurrentState.EnterState(this);
+        Debug.Log("CurrentState: " + CurrentState);
     }
 
     #region State Machine Init

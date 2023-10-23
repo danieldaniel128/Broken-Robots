@@ -32,9 +32,9 @@ public class ScanState : AIState
     /// <summary>
     /// scan for targets to chase 
     /// </summary>
-    void ScanForTarget(StateMachine stateMachine)
+    public void ScanForTarget(StateMachine stateMachine)
     {
-        Collider[] potentailColliders = Physics.OverlapSphere(gameObject.transform.position, stateMachine.ScanRadius, stateMachine.TargetLayer);
+        Collider[] potentailColliders = Physics.OverlapSphere(gameObject.transform.position, stateMachine.CurrentSearchRadius, stateMachine.TargetLayer);
         stateMachine.Target = GetClosestTarget(potentailColliders);
     }
 
