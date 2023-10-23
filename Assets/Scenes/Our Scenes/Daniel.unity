@@ -558,12 +558,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 657785203, guid: 142f005f041247f4aba03da033431397, type: 3}
-      propertyPath: m_Acceleration
+      propertyPath: m_Speed
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 657785203, guid: 142f005f041247f4aba03da033431397, type: 3}
+      propertyPath: m_Acceleration
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 657785203, guid: 142f005f041247f4aba03da033431397, type: 3}
       propertyPath: m_AngularSpeed
-      value: 0
+      value: 11.71
       objectReference: {fileID: 0}
     - target: {fileID: 3552405094001790304, guid: 142f005f041247f4aba03da033431397,
         type: 3}
@@ -588,12 +592,17 @@ PrefabInstance:
     - target: {fileID: 3552405094001790304, guid: 142f005f041247f4aba03da033431397,
         type: 3}
       propertyPath: _minSpeed
-      value: 3
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3552405094001790304, guid: 142f005f041247f4aba03da033431397,
         type: 3}
       propertyPath: _scanRadius
-      value: 8
+      value: 35.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 3552405094001790304, guid: 142f005f041247f4aba03da033431397,
+        type: 3}
+      propertyPath: _acceleration
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3552405094001790304, guid: 142f005f041247f4aba03da033431397,
         type: 3}

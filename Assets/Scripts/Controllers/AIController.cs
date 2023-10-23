@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,25 +13,41 @@ public class AIController : MonoBehaviour
 
     [SerializeField] float _minSpeed;
     [SerializeField] float _maxSpeed;
+    [SerializeField] float _acceleration;
 
     [SerializeField] float _scanRadius;
     [SerializeField] LayerMask _targetLayer;
     [SerializeField] bool _chaseTarget;//makes it easy for testing in editor
 
-
+    Action OnSecondFrame;
 
     private void Start()
     {
         agent.speed = _minSpeed;
+        agent.acceleration = float.MaxValue;//change the speed to the agent.speed
+        OnSecondFrame += ChangeAcceleration;
     }
 
     void Update()
     {
+        OnSecondFrame?.Invoke();
         ScanForTarget();
         MoveNavAgent();
     }
 
+    /// <summary>
+    /// changing from huge acceleration of the first frame to regular acceleration
+    /// </summary>
+    void ChangeAcceleration()
+    {
+        agent.acceleration = _acceleration;
+        if(Time.frameCount == 2)
+            agent.acceleration = _acceleration;
+    }
 
+    /// <summary>
+    /// moves the nav agent
+    /// </summary>
     void MoveNavAgent()
     {
         if (target == null)
