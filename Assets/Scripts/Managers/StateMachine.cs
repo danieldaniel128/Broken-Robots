@@ -2,8 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
+
 public class StateMachine : MonoBehaviour
 {
     public NavMeshAgent Agent;
@@ -45,6 +48,7 @@ public class StateMachine : MonoBehaviour
     {
         OnSecondFrame?.Invoke();//event that happens on second frame only
         CurrentState.UpdateState(this);
+        //RotateAgentTowardsDestination();
     }
 
     public void ChangeState(AIState newState)
@@ -115,4 +119,39 @@ public class StateMachine : MonoBehaviour
     }
 
     #endregion
+
+
+    void OnDrawGizmos()
+    {
+        if (PatrolPoints ==null || PatrolPoints.Length != 2)
+            return;
+            Gizmos.color = Color.blue;
+            Gizmos.DrawLine(PatrolPoints[0], PatrolPoints[1]);
+        switch (CurrentState)
+        {
+            case AttackState:
+                Gizmos.color = Color.red;
+                break;
+            case ChaseState://#FFA500
+                Gizmos.color = new Color(255f / 255f, 165 / 255f, 0 / 255f);
+                break;
+        }
+       // Gizmos.DrawLine(transform.position, Vector3.right * CurrentSearchRadius * transform.rotation.eulerAngles.)
+
+    }
+
+    //private void RotateAgentTowardsDestination()
+    //{
+    //    Vector3 destination = Agent.destination;
+    //    Vector3 direction = (destination - transform.position).normalized;
+
+    //    // Calculate the rotation angle based on the X-axis as forward and invert it.
+    //    float angle = Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg;
+
+    //    // Create a Quaternion to represent the rotation.
+    //    Quaternion targetRotation = Quaternion.Euler(0f, angle, 0f);
+
+    //    // Apply the rotation to the agent.
+    //    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * Agent.angularSpeed);
+    //}
 }
