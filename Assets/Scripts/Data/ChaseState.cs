@@ -18,7 +18,7 @@ public class ChaseState : AIState
     {
         stateMachine.Agent.SetDestination(stateMachine.Target.position);
 
-        if (Vector3.Distance(stateMachine.transform.position, stateMachine.Target.position) <= stateMachine.AttackRadius + 0.5f)//change to attack if in attack radius
+        if (Vector3.Distance(stateMachine.transform.position, stateMachine.Target.position) <= stateMachine.AttackRadius + 0.1f)//change to attack if in attack radius
         {
             stateMachine.ChangeState(stateMachine.AIStates.Find(c => c is AttackState));
         }
