@@ -5,31 +5,54 @@ using UnityEngine.AI;
 
 public class DroneStateMachine : MonoBehaviour
 {
-    public Transform target;
-    public float enemySpeed = 5f;
-    public float raycastDistance = 2f;
+    [SerializeField] Transform target;//player
+    public float _speed = 5f;
+    [SerializeField] int numberOfRays;
+    [SerializeField] float angle;
+    [SerializeField] Vector3 RaysDirection;
+    [SerializeField] float rayRange;
+
 
     [SerializeField] private Rigidbody droneRigidbody;
 
-    private void FixedUpdate()
+    private Vector3 targetDirection;
+
+
+    private void Update()
     {
+        targetDirection = target.position - transform.position;
+        var deltaPosition = Vector3.zero;
         if (target == null)
         {
             return;
         }
-
-        Vector3 direction = (target.position - transform.position).normalized;
-
-        // Raycast to detect obstacles
-        Ray ray = new Ray(transform.position, direction);
-        if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance))
+        for (int i = 0; i < numberOfRays; i++)
         {
-            // Calculate a new direction away from the obstacle
-            Vector3 avoidanceDirection = Vector3.Reflect(direction, hit.normal).normalized;
-            direction = avoidanceDirection;
+            Quaternion rotation = transform.rotation;
+            Quaternion rotationMod = Quaternion.AngleAxis((i / ((float)numberOfRays - 1)) * angle - angle / 2f, Vector3.forward);
+            var direction = rotation * rotationMod * targetDirection.normalized;
+            Ray ray = new Ray(transform.position, direction);
+            RaycastHit hitInfo;
+            if (Physics.Raycast(ray, out hitInfo, rayRange))
+            {
+                deltaPosition -= (1f / numberOfRays) * direction;
+            }
+            else
+                deltaPosition += (1f / numberOfRays) * direction;
         }
+        transform.position += deltaPosition * _speed * Time.deltaTime;
+    }
 
-        // Apply movement
-        droneRigidbody.velocity = direction * enemySpeed;
+
+    private void OnDrawGizmos()
+    {
+        Quaternion rotation = transform.rotation;
+
+        for (int i = 0; i < numberOfRays; i++)
+        {
+            Quaternion rotationMod = Quaternion.AngleAxis((i / ((float)numberOfRays - 1)) * angle - angle / 2f, Vector3.forward);
+            var direction = rotation * rotationMod * targetDirection.normalized * rayRange;
+            Gizmos.DrawRay(transform.position, direction);
+        }
     }
 }
