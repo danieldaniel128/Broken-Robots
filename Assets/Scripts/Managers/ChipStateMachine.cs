@@ -91,26 +91,26 @@ public class ChipStateMachine : MonoBehaviour
 
     void SetFirstCurrentState()
     {
-        CurrentState = AIStates.Find(c => c is PatrolState);
+        CurrentState = AIStates.Find(c => c is ChipPatrolState);
         CurrentState.EnterState(this);
     }
     void SetPatrolState()
     {
         PatrolStartPoint = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         SetPatrolPoints();
-        AIStates.Add(new PatrolState(PatrolPoints));
+        AIStates.Add(new ChipPatrolState(PatrolPoints));
     }
     void SetScanState()
     {
-        AIStates.Add(new ScanState());
+        AIStates.Add(new ChipScanState());
     }
     void SetAttackState()
     {
-        AIStates.Add(new AttackState());
+        AIStates.Add(new ChipAttackState());
     }
     void SetChaseState()
     {
-        AIStates.Add(new ChaseState());
+        AIStates.Add(new ChipChaseState());
     }
     void SetStateList()
     {
@@ -132,10 +132,10 @@ public class ChipStateMachine : MonoBehaviour
             Gizmos.DrawLine(PatrolPoints[0], PatrolPoints[1]);
         switch (CurrentState)
         {
-            case AttackState:
+            case ChipAttackState:
                 Gizmos.color = Color.red;
                 break;
-            case ChaseState://#FFA500
+            case ChipChaseState://#FFA500
                 Gizmos.color = new Color(255f / 255f, 165 / 255f, 0 / 255f);
                 break;
         }

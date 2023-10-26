@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class PatrolState : AIState
+public class ChipPatrolState : AIState
 {
     private Vector3[] _patrolPoints;
     private int _currentPatrolIndex => _patrolCounter % 2 ;
     private int _patrolCounter;
 
-    public PatrolState(Vector3[] points)
+    public ChipPatrolState(Vector3[] points)
     {
         _patrolPoints = points;
         _patrolCounter = 0;
@@ -33,7 +33,7 @@ public class PatrolState : AIState
             _patrolCounter++;
             stateMachine.Agent.SetDestination(_patrolPoints[_currentPatrolIndex]);
         }
-        stateMachine.ChangeState(stateMachine.AIStates.Find(c => c is ScanState));
+        stateMachine.ChangeState(stateMachine.AIStates.Find(c => c is ChipScanState));
     }
 
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class ScanState : AIState
+public class ChipScanState : AIState
 {
     private GameObject gameObject;
     public override void EnterState(ChipStateMachine stateMachine)
@@ -21,11 +21,11 @@ public class ScanState : AIState
         ScanForTarget(stateMachine);
         if (stateMachine.Target != null)
         {
-            stateMachine.ChangeState(stateMachine.AIStates.Find(c => c is ChaseState));//found a target, its time to chase it
+            stateMachine.ChangeState(stateMachine.AIStates.Find(c => c is ChipChaseState));//found a target, its time to chase it
         }
         else
         {
-            stateMachine.ChangeState(stateMachine.AIStates.Find(c => c is PatrolState));//didnt found, continue patrol
+            stateMachine.ChangeState(stateMachine.AIStates.Find(c => c is ChipPatrolState));//didnt found, continue patrol
         }
     }
 
