@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
 
-public class StateMachine : MonoBehaviour
+public class ChipStateMachine : MonoBehaviour
 {
     public NavMeshAgent Agent;
     public List<AIState> AIStates;
@@ -36,12 +36,14 @@ public class StateMachine : MonoBehaviour
     public float AttackRadius;
 
     Action OnSecondFrame;
+    private float originalZPosition;
 
     private void Start()
     {
         SetStateList();
         SetFirstCurrentState();
         InitMovementphysics();
+        originalZPosition = transform.position.z; // Record the original Z position.
     }
 
     private void Update()
@@ -49,6 +51,7 @@ public class StateMachine : MonoBehaviour
         OnSecondFrame?.Invoke();//event that happens on second frame only
         CurrentState.UpdateState(this);
         RotateAgentTowardsDestination();
+        KeepsTheAgentOnZAxis();
     }
 
     public void ChangeState(AIState newState)
@@ -154,4 +157,11 @@ public class StateMachine : MonoBehaviour
         // Apply the rotation to the agent.
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * Agent.angularSpeed);
     }
+    private void KeepsTheAgentOnZAxis()
+    {
+        Vector3 newPosition = transform.position;
+        newPosition.z = originalZPosition;
+        transform.position = newPosition;
+    }
+
 }

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public abstract class AIState
 {
-    public abstract void EnterState(StateMachine stateMachine);
-    public abstract void UpdateState(StateMachine stateMachine);
-    public abstract void ExitState(StateMachine stateMachine);
+    public abstract void EnterState(ChipStateMachine stateMachine);
+    public abstract void UpdateState(ChipStateMachine stateMachine);
+    public abstract void ExitState(ChipStateMachine stateMachine);
 }
 

@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class ChaseState : AIState
 {
-    public override void EnterState(StateMachine stateMachine)
+    public override void EnterState(ChipStateMachine stateMachine)
     {
         stateMachine.Agent.SetDestination(stateMachine.Target.position);
     }
 
-    public override void ExitState(StateMachine stateMachine)
+    public override void ExitState(ChipStateMachine stateMachine)
     {
 
     }
 
-    public override void UpdateState(StateMachine stateMachine)
+    public override void UpdateState(ChipStateMachine stateMachine)
     {
         stateMachine.Agent.SetDestination(stateMachine.Target.position);
 

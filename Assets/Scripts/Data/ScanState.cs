@@ -6,17 +6,17 @@ using static UnityEngine.GraphicsBuffer;
 public class ScanState : AIState
 {
     private GameObject gameObject;
-    public override void EnterState(StateMachine stateMachine)
+    public override void EnterState(ChipStateMachine stateMachine)
     {
         gameObject = stateMachine.gameObject;
     }
 
-    public override void ExitState(StateMachine stateMachine)
+    public override void ExitState(ChipStateMachine stateMachine)
     {
 
     }
 
-    public override void UpdateState(StateMachine stateMachine)
+    public override void UpdateState(ChipStateMachine stateMachine)
     {
         ScanForTarget(stateMachine);
         if (stateMachine.Target != null)
@@ -32,7 +32,7 @@ public class ScanState : AIState
     /// <summary>
     /// scan for targets to chase 
     /// </summary>
-    public void ScanForTarget(StateMachine stateMachine)
+    public void ScanForTarget(ChipStateMachine stateMachine)
     {
         Collider[] potentailColliders = Physics.OverlapSphere(gameObject.transform.position, stateMachine.CurrentSearchRadius, stateMachine.TargetLayer);
         stateMachine.Target = GetClosestTarget(potentailColliders);
