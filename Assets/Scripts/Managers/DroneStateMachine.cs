@@ -16,8 +16,9 @@ public class DroneStateMachine : MonoBehaviour
     [SerializeField] private Rigidbody droneRigidbody;
 
     private Vector3 targetDirection;
-
-
+    private Vector3 patrolStartPoint;
+    private Vector3[] patrolPoints;
+    [SerializeField] float _patrolRange;
     private void Update()
     {
         targetDirection = target.position - transform.position;
@@ -54,5 +55,17 @@ public class DroneStateMachine : MonoBehaviour
             var direction = rotation * rotationMod * targetDirection.normalized * rayRange;
             Gizmos.DrawRay(transform.position, direction);
         }
+    }
+
+    void SetPatrol()
+    {
+        patrolStartPoint = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        SetPatrolPoints();
+    }
+    void SetPatrolPoints()
+    {
+        patrolPoints = new Vector3[2];
+        patrolPoints[0] = patrolStartPoint + Vector3.up * _patrolRange;
+        patrolPoints[1] = patrolStartPoint + Vector3.down * _patrolRange;
     }
 }

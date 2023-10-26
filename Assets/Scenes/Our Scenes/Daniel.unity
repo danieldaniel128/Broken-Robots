@@ -1493,26 +1493,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 286435194596808941, guid: ad74d61eac6406a4ba00a5706fd53997,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 286435194957737550, guid: ad74d61eac6406a4ba00a5706fd53997,
-        type: 3}
-      propertyPath: m_Height
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 286435195311627512, guid: ad74d61eac6406a4ba00a5706fd53997,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3672437929096642727, guid: ad74d61eac6406a4ba00a5706fd53997,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
+    - target: {fileID: 1272379947, guid: ad74d61eac6406a4ba00a5706fd53997, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 1031877178}
     - target: {fileID: 4500754505380993555, guid: ad74d61eac6406a4ba00a5706fd53997,
         type: 3}
       propertyPath: m_Name
@@ -1573,9 +1557,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 286435194038213210, guid: ad74d61eac6406a4ba00a5706fd53997, type: 3}
-    - {fileID: 286435194957737550, guid: ad74d61eac6406a4ba00a5706fd53997, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad74d61eac6406a4ba00a5706fd53997, type: 3}
 --- !u!1 &508949147
 GameObject:
@@ -4067,31 +4049,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1262286426}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1272379942 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4500754505380993555, guid: ad74d61eac6406a4ba00a5706fd53997,
-    type: 3}
-  m_PrefabInstance: {fileID: 474004284}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1272379947
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1272379942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab890460f089ad64ba5397c54d3ad635, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 1031877178}
-  _speed: 5
-  numberOfRays: 7
-  angle: 180
-  RaysDirection: {x: 1, y: 0, z: 0}
-  rayRange: 1
-  droneRigidbody: {fileID: 0}
 --- !u!1 &1274481992
 GameObject:
   m_ObjectHideFlags: 0

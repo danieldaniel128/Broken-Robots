@@ -93,7 +93,7 @@ SphereCollider:
   m_GameObject: {fileID: 286435194596808947}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -190,7 +190,7 @@ SphereCollider:
   m_GameObject: {fileID: 286435195311627518}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -320,7 +320,7 @@ BoxCollider:
   m_GameObject: {fileID: 4296565262421513922}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -333,8 +333,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8461832560326561565}
-  - component: {fileID: 286435194957737550}
-  - component: {fileID: 286435194038213210}
+  - component: {fileID: 1272379947}
   m_Layer: 0
   m_Name: Enemy Drone
   m_TagString: Untagged
@@ -359,29 +358,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!195 &286435194957737550
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4500754505380993555}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 0
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 10
-  m_StoppingDistance: 1.5
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 1
-  m_BaseOffset: 0.5
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
---- !u!114 &286435194038213210
+--- !u!114 &1272379947
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -390,18 +367,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4500754505380993555}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8639b8e6ededb241ba0f9a83904b74c, type: 3}
+  m_Script: {fileID: 11500000, guid: ab890460f089ad64ba5397c54d3ad635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Agent: {fileID: 286435194957737550}
-  _patrolRange: 7
-  ScanRadius: 3
-  ChaseRadius: 6
-  CurrentSearchRadius: 3
-  TargetLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  _minSpeed: 3
-  _maxSpeed: 3
-  _acceleration: 3
-  AttackRadius: 1
+  target: {fileID: 0}
+  _speed: 5
+  numberOfRays: 7
+  angle: 180
+  RaysDirection: {x: 1, y: 0, z: 0}
+  rayRange: 1
+  droneRigidbody: {fileID: 0}
