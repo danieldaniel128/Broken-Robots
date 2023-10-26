@@ -5,20 +5,31 @@ using UnityEngine.AI;
 
 public class DroneStateMachine : MonoBehaviour
 {
-    [SerializeField] private NavMeshAgent navMeshAgent;
-    [SerializeField] private Transform playerTransform;
-    [SerializeField] private float distanceFromPlayer = 5f;
+    public Transform target;
+    public float enemySpeed = 5f;
+    public float raycastDistance = 2f;
 
+    [SerializeField] private Rigidbody droneRigidbody;
 
-    private void Update()
+    private void FixedUpdate()
     {
-        Vector3 targetPosition = playerTransform.position + (playerTransform.forward * distanceFromPlayer);
-        RaycastHit hit;
-        if (Physics.Raycast(targetPosition, Vector3.down, out hit))
+        if (target == null)
         {
-            targetPosition.y = hit.point.y + (GetComponent<Renderer>().bounds.extents.y * 2f); // Float above the ground
+            return;
         }
 
-        navMeshAgent.SetDestination(targetPosition);
+        Vector3 direction = (target.position - transform.position).normalized;
+
+        // Raycast to detect obstacles
+        Ray ray = new Ray(transform.position, direction);
+        if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance))
+        {
+            // Calculate a new direction away from the obstacle
+            Vector3 avoidanceDirection = Vector3.Reflect(direction, hit.normal).normalized;
+            direction = avoidanceDirection;
+        }
+
+        // Apply movement
+        droneRigidbody.velocity = direction * enemySpeed;
     }
 }
