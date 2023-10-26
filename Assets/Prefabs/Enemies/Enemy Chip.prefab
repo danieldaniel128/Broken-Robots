@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 3925169932826054001}
   - component: {fileID: 3534905265200508826}
   m_Layer: 0
-  m_Name: AI Body
+  m_Name: Chip Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -340,7 +340,7 @@ GameObject:
   - component: {fileID: 657785203}
   - component: {fileID: 2118415719}
   m_Layer: 0
-  m_Name: AI tmp
+  m_Name: Enemy Chip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
