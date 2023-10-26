@@ -48,7 +48,7 @@ public class StateMachine : MonoBehaviour
     {
         OnSecondFrame?.Invoke();//event that happens on second frame only
         CurrentState.UpdateState(this);
-        //RotateAgentTowardsDestination();
+        RotateAgentTowardsDestination();
     }
 
     public void ChangeState(AIState newState)
@@ -140,18 +140,18 @@ public class StateMachine : MonoBehaviour
 
     }
 
-    //private void RotateAgentTowardsDestination()
-    //{
-    //    Vector3 destination = Agent.destination;
-    //    Vector3 direction = (destination - transform.position).normalized;
+    private void RotateAgentTowardsDestination()
+    {
+        Vector3 destination = Agent.destination;
+        Vector3 direction = (destination - transform.position).normalized;
 
-    //    // Calculate the rotation angle based on the X-axis as forward and invert it.
-    //    float angle = Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg;
+        // Calculate the rotation angle based on the X-axis as forward and invert it.
+        float angle = Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg;
 
-    //    // Create a Quaternion to represent the rotation.
-    //    Quaternion targetRotation = Quaternion.Euler(0f, angle, 0f);
+        // Create a Quaternion to represent the rotation.
+        Quaternion targetRotation = Quaternion.Euler(0f, angle, 0f);
 
-    //    // Apply the rotation to the agent.
-    //    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * Agent.angularSpeed);
-    //}
+        // Apply the rotation to the agent.
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * Agent.angularSpeed);
+    }
 }
