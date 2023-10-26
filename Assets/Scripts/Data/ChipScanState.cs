@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class ChipScanState : AIState
+public class ChipScanState : ChipAIState
 {
     private GameObject gameObject;
     public override void EnterState(ChipStateMachine stateMachine)

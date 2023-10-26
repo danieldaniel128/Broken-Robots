@@ -10,8 +10,8 @@ using UnityEngine.UIElements;
 public class ChipStateMachine : MonoBehaviour
 {
     public NavMeshAgent Agent;
-    public List<AIState> AIStates;
-    public AIState CurrentState { get; private set; }
+    public List<ChipAIState> AIStates;
+    public ChipAIState CurrentState { get; private set; }
     public Transform Target { get; set; }
     public Vector3[] PatrolPoints { get; private set; }
     public Vector3 PatrolStartPoint { get; private set; }
@@ -54,7 +54,7 @@ public class ChipStateMachine : MonoBehaviour
         KeepsTheAgentOnZAxis();
     }
 
-    public void ChangeState(AIState newState)
+    public void ChangeState(ChipAIState newState)
     {
         CurrentState.ExitState(this);
         CurrentState = newState;
@@ -114,7 +114,7 @@ public class ChipStateMachine : MonoBehaviour
     }
     void SetStateList()
     {
-        AIStates = new List<AIState>();
+        AIStates = new List<ChipAIState>();
         SetPatrolState();
         SetScanState();
         SetAttackState();

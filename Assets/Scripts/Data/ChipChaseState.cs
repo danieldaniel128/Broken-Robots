@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChipChaseState : AIState
+public class ChipChaseState : ChipAIState
 {
     public override void EnterState(ChipStateMachine stateMachine)
     {

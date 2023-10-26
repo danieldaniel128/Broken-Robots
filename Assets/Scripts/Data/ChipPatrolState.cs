@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class ChipPatrolState : AIState
+public class ChipPatrolState : ChipAIState
 {
     private Vector3[] _patrolPoints;
     private int _currentPatrolIndex => _patrolCounter % 2 ;
