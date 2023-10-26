@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class DroneStateMachine : MonoBehaviour
 {
     [SerializeField] Transform target;//player
+    [SerializeField] float chaseTargetRange;
     public float _speed = 5f;
     [SerializeField] int numberOfRays;
     [SerializeField] float angle;
@@ -19,7 +21,29 @@ public class DroneStateMachine : MonoBehaviour
     private Vector3 patrolStartPoint;
     private Vector3[] patrolPoints;
     [SerializeField] float _patrolRange;
+
+    int currentPatrolPoint => patrolCounter % 2;
+    int patrolCounter;
+
+    private void Start()
+    {
+        SetPatrol();
+    }
     private void Update()
+    {
+        ChasePlayer();
+    }
+
+    void Patrol()
+    {
+        if(transform.position == patrolPoints[currentPatrolPoint])
+        {
+            patrolCounter++;
+            transform.position = Vector3.MoveTowards(transform.position, patrolPoints[currentPatrolPoint], _patrolRange * Time.deltaTime);
+        }
+    }
+
+    void ChasePlayer()
     {
         targetDirection = target.position - transform.position;
         var deltaPosition = Vector3.zero;
@@ -43,8 +67,6 @@ public class DroneStateMachine : MonoBehaviour
         }
         transform.position += deltaPosition * _speed * Time.deltaTime;
     }
-
-
     private void OnDrawGizmos()
     {
         Quaternion rotation = transform.rotation;
