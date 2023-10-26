@@ -6,24 +6,38 @@ using UnityEngine.AI;
 
 public class DroneStateMachine : MonoBehaviour
 {
+
     [SerializeField] Transform target;//player
+
+    [Header("chase player parameters")]
     [SerializeField] float chaseTargetRange;
-    public float _speed = 5f;
-    [SerializeField] int numberOfRays;
-    [SerializeField] float angle;
-    [SerializeField] Vector3 RaysDirection;
-    [SerializeField] float rayRange;
+    [SerializeField] float _speed = 5f;
+    bool isChasing;
 
-
-    [SerializeField] private Rigidbody droneRigidbody;
-
+    [Header("Patrol Parameters")]
+    [SerializeField] float patrolTime;
+    [SerializeField] float _patrolRange;
     private Vector3 targetDirection;
     private Vector3 patrolStartPoint;
     private Vector3[] patrolPoints;
-    [SerializeField] float _patrolRange;
+
+    [Header("Attack Parameters")]
+    [SerializeField] private float attackRange;
+    [SerializeField] private float attackCooldown;
+    private float attackTimer;
+    private bool isAttacking;
+
+    [Header("path finding parameters")]
+    [SerializeField] int numberOfRays;
+    [SerializeField] float angle;
+    [SerializeField] float rayRange;
+
+    [SerializeField] private Rigidbody droneRigidbody;
 
     int currentPatrolPoint => patrolCounter % 2;
     int patrolCounter;
+
+
 
     private void Start()
     {
@@ -31,20 +45,40 @@ public class DroneStateMachine : MonoBehaviour
     }
     private void Update()
     {
+        Patrol();
+        ScanForTarget();
         ChasePlayer();
+    }
+
+    void ScanForTarget()
+    {
+        if (Vector3.Distance(target.position, transform.position) <= chaseTargetRange)
+        {
+            isChasing = true;
+        }
+        else
+            isChasing = false;
+        if (Vector3.Distance(target.position, transform.position) <= attackRange)
+            isAttacking = true;
+        else
+            isAttacking = false;
     }
 
     void Patrol()
     {
-        if(transform.position == patrolPoints[currentPatrolPoint])
+        if (isChasing)
+            return;
+        transform.position = Vector3.MoveTowards(transform.position, patrolPoints[currentPatrolPoint], _patrolRange * (Time.deltaTime / patrolTime) * 2);
+        if (transform.position == patrolPoints[currentPatrolPoint])
         {
             patrolCounter++;
-            transform.position = Vector3.MoveTowards(transform.position, patrolPoints[currentPatrolPoint], _patrolRange * Time.deltaTime);
         }
     }
 
     void ChasePlayer()
     {
+        if (!isChasing || isAttacking)
+            return;
         targetDirection = target.position - transform.position;
         var deltaPosition = Vector3.zero;
         if (target == null)
@@ -66,6 +100,14 @@ public class DroneStateMachine : MonoBehaviour
                 deltaPosition += (1f / numberOfRays) * direction;
         }
         transform.position += deltaPosition * _speed * Time.deltaTime;
+    }
+
+    void AttackPlayer()
+    {
+        if (!isAttacking)
+            return;
+        Debug.Log("attacking");
+
     }
     private void OnDrawGizmos()
     {
