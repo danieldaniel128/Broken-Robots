@@ -34,10 +34,10 @@ public class DroneStateMachine : MonoBehaviour
 
     [SerializeField] private Rigidbody droneRigidbody;
 
+    [SerializeField] private ProjectileSpawner _projectileSpawner;
+
     int currentPatrolPoint => patrolCounter % 2;
     int patrolCounter;
-
-
 
     private void Start()
     {
@@ -48,6 +48,8 @@ public class DroneStateMachine : MonoBehaviour
         Patrol();
         ScanForTarget();
         ChasePlayer();
+        AttackPlayer();
+        ActivateAttackCooldown();
     }
 
     void ScanForTarget()
@@ -59,7 +61,9 @@ public class DroneStateMachine : MonoBehaviour
         else
             isChasing = false;
         if (Vector3.Distance(target.position, transform.position) <= attackRange)
+        {
             isAttacking = true;
+        }
         else
             isAttacking = false;
     }
@@ -101,13 +105,13 @@ public class DroneStateMachine : MonoBehaviour
         }
         transform.position += deltaPosition * _speed * Time.deltaTime;
     }
-
+    bool hasAttacked;
     void AttackPlayer()
     {
-        if (!isAttacking)
+        if (!isAttacking || hasAttacked)
             return;
-        Debug.Log("attacking");
-
+        ShootPlayer();
+        hasAttacked = true;
     }
     private void OnDrawGizmos()
     {
@@ -132,4 +136,22 @@ public class DroneStateMachine : MonoBehaviour
         patrolPoints[0] = patrolStartPoint + Vector3.up * _patrolRange;
         patrolPoints[1] = patrolStartPoint + Vector3.down * _patrolRange;
     }
+
+    void ShootPlayer()
+    {
+        _projectileSpawner.SpawnProjectile(targetDirection);
+    }
+    void ActivateAttackCooldown()
+    {
+        if (!hasAttacked)
+            return;
+        if(attackTimer < attackCooldown)
+            attackTimer += Time.deltaTime;
+        else
+        {
+            hasAttacked = false;
+            attackTimer = 0;
+        }
+    }
+   
 }
