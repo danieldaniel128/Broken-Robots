@@ -462,7 +462,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1112845007, guid: 55db61c41d2463b4bb71f25fee9f6d7f, type: 3}
       propertyPath: jumpImpulse
-      value: 25
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1112845007, guid: 55db61c41d2463b4bb71f25fee9f6d7f, type: 3}
+      propertyPath: jumpChargeRate
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 301645121796722906, guid: 55db61c41d2463b4bb71f25fee9f6d7f,
         type: 3}

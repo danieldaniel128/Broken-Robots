@@ -9,8 +9,8 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] Rigidbody body, levitation;
 
-    [SerializeField] float levForce = 1, levMax = 2, levMin = .5f, movSpeed = 5, jumpImpulse = 1;
-    float levMult = 1;
+    [SerializeField] float levForce = 1, levMax = 2, levMin = .5f, movSpeed = 5, jumpImpulse = 1, jumpChargeRate = 1;
+    float levMult = 1, jumpForce;
     bool canJump, jumpLock, isGrounded;
     const float jumpTimer = 1.5f;
 
@@ -41,6 +41,12 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
          transform.position += dir * movSpeed * Time.deltaTime * Vector3.right;
+
+        if (jumpLock)
+        {
+            jumpForce += Time.deltaTime * jumpChargeRate;
+            jumpForce = jumpForce > 1 ? 1 : jumpForce;
+        }
     }
     private void LateUpdate()
     {
@@ -88,6 +94,7 @@ public class PlayerController : MonoBehaviour
                 {
                     jumpLock = true;
                     state = PlayerState.Jumping;
+                    jumpForce = 0;
                     break;
                 }
             case InputActionPhase.Performed:
@@ -100,7 +107,7 @@ public class PlayerController : MonoBehaviour
                 {
                     if (!jumpLock) return;
                     levMult = 1;
-                    levitation.AddForce(jumpImpulse * Vector3.up, ForceMode.Impulse);
+                    levitation.AddForce(jumpImpulse * jumpForce * Vector3.up, ForceMode.Impulse);
                     state = PlayerState.Airborne;
                     jumpLock = false;
                     canJump = false;
