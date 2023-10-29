@@ -5,22 +5,13 @@ using UnityEngine;
 
 public class CheckpointScript : MonoBehaviour
 {
-    [SerializeField] private GameObject playerRef;
+    [SerializeField] private WarpBackToCheckpoint playerRef;
 
-    private Transform lastCheckpoint;
-
-    private void OnCollisionStay(Collision collision)
+    private void OnTriggerStay(Collider collider)
     {
-        if (collision.collider.tag == "Platform")
-        lastCheckpoint.position = playerRef.transform.position;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.collider.tag == "Spikes")
+        if (collider.gameObject.tag == "Platform")
         {
-            playerRef.transform.position = lastCheckpoint.position;
-            //Deal damage
+            playerRef.lastCheckpoint = playerRef.transform.position;
         }
     }
 }
