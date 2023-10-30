@@ -56,13 +56,13 @@ public class hpBar : MonoBehaviour
         }
     }
 
-    public void ModifyHP(int mod)
+    public void ModifyHP(int newCurrentHP)
     {
-        currentHP += mod;
+        currentHP = newCurrentHP;
     }
 
-    public void ModifyMaxHP(int mod)
+    public void ModifyMaxHP(int newMaxHP)
     {
-        maxHP += mod;
+        maxHP += newMaxHP;
     }
 }
