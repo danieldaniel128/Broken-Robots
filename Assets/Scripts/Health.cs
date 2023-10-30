@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.WebSockets;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
     [SerializeField] int _maxHealth;
-    public int _currentHealth;
+    [SerializeField] int _currentHealth;
+    public int CurrentHealth { get { return _currentHealth; } set { _currentHealth = value; OnChangeValue?.Invoke(_currentHealth); } }
 
     public UnityEvent OnDeath;
+    public UnityEvent<int> OnChangeValue;
 
     // You can add events or delegate functions here to handle health changes, like onHealthChanged
 
@@ -26,9 +29,12 @@ public class Health : MonoBehaviour
         {
             OnDeath?.Invoke();
         }
+    }
 
-        // You can also trigger an event here to notify other scripts/UI elements of the health change
-        // For example: onHealthChanged?.Invoke(currentHealth);
+    [ContextMenu("value change test")]
+    public void ChangeValueTest()
+    {
+        OnChangeValue?.Invoke(CurrentHealth);
     }
 
     public void Heal(int amount)
