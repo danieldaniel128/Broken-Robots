@@ -8,6 +8,11 @@ public class MapManager : MonoBehaviour
     [SerializeField] private GameObject MapCanvasGO;
     [SerializeField] private string OpenMapKey;
 
+    private void Awake()
+    {
+        //Read from the json and open all the rooms that signal true
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(OpenMapKey))
