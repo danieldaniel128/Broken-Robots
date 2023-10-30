@@ -10,10 +10,6 @@ public class Projectile : MonoBehaviour
     [SerializeField] Rigidbody projectileRigidBody;
     public Vector3 fireDirection;
 
-    private void Update()
-    {
-        transform.position += fireDirection * _speed * Time.deltaTime;
-    }
     private void Start()
     {
         projectileRigidBody.AddForce(fireDirection*_speed,ForceMode.Impulse);
@@ -23,8 +19,9 @@ public class Projectile : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player"))
         {
-            Debug.Log("hit player");
+            collision.gameObject.GetComponent<Health>().TakeDamage(_damage);
         }
+        Destroy(gameObject);
     }
 
 }

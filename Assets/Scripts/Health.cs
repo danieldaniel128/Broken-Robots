@@ -17,15 +17,15 @@ public class Health : MonoBehaviour
 
     private void Start()
     {
-        _currentHealth = _maxHealth; // Set the initial health to the maximum when the game starts
+        CurrentHealth = _maxHealth; // Set the initial health to the maximum when the game starts
     }
 
     public void TakeDamage(int damage)
     {
-        _currentHealth -= damage;
+        CurrentHealth -= damage;
 
         // Check if the player is dead
-        if (_currentHealth <= 0)
+        if (CurrentHealth <= 0)
         {
             OnDeath?.Invoke();
         }
