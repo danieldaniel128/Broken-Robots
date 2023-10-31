@@ -2172,7 +2172,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 120
   m_CollisionDetection: 0
 --- !u!138 &1715388951
 FixedJoint:
@@ -2353,7 +2353,19 @@ MonoBehaviour:
     m_ActionId: 84f95803-d2a7-44c8-bd82-3428f63c7544
     m_ActionName: Robot/Repair[/Keyboard/d]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1112845007}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: Dash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 713dcc9d-57ca-45d8-8421-92b456dfb8d6
     m_ActionName: Robot/Dash[/Keyboard/shift]
   m_NeverAutoSwitchControlSchemes: 0
