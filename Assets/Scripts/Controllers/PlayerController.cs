@@ -25,9 +25,15 @@ public class PlayerController : MonoBehaviour
     }
 
     PlayerState state;
+    Shock shock;
 
-    float inputDir;
-    // Start is called before the first frame update
+    float inputDir, lookDir = 1;
+
+    private void Awake()
+    {
+        shock = GetComponentInChildren<Shock>(true);
+    }
+
     void Start()
     {
         movementLock = false;
@@ -55,11 +61,12 @@ public class PlayerController : MonoBehaviour
     }
     private void LateUpdate()
     {
-        stateGUI.text = state.ToString();
+        if (stateGUI is not null)
+            stateGUI.text = state.ToString();
     }
 
     void Levitate(float distanceFloor) {
-        levitation.AddForce(distanceFloor * levForce * Vector3.up);
+        levitation.AddForce(distanceFloor * levForce * levMult * Vector3.up);
     }
 
     float DistanceFloor()
@@ -81,7 +88,7 @@ public class PlayerController : MonoBehaviour
             {
                 state = PlayerState.Normal;
             }
-            return hit.collider.gameObject.tag == "Spikes" ? 0 : Mathf.Lerp(levMax * 2f * levMult, levMin * levMult, hit.distance);
+            return hit.collider.gameObject.tag == "Spikes" ? 0 : Mathf.Lerp(levMax * 2f, levMin, hit.distance);
         }
 
 
@@ -89,7 +96,7 @@ public class PlayerController : MonoBehaviour
 
     public void Move(InputAction.CallbackContext ctx) {
         switch (ctx.phase) {
-            case InputActionPhase.Performed: inputDir = ctx.ReadValue<float>(); break;
+            case InputActionPhase.Performed: lookDir = inputDir = ctx.ReadValue<float>(); break;
             default: inputDir = 0; break;
         }
     }
@@ -145,35 +152,61 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void Shock(InputAction.CallbackContext ctx) { }
+    public void Shock(InputAction.CallbackContext ctx) {
+        switch (ctx.phase)
+        {
+            case InputActionPhase.Started:
+                {
+                    shock.SetDirection(lookDir);
+                    break;
+                }
+            case InputActionPhase.Performed:
+                {
+                    bool hadDash = dashAvailable;
+                    dashAvailable = false;
+                    movementLock = true;
+                    LockGravity(true);
+                    speedMult = 0;
+                    levMult = 0;
+                    StartCoroutine(shock.Perform(this, () => {
+                        movementLock = false;
+                        LockGravity(false);
+                        speedMult = 1;
+                        levMult = 1;
+                        dashAvailable = hadDash;
+                    }));
+                    break;
+                }
+        }
+    }
     public void Purify(InputAction.CallbackContext ctx) { }
     public void Repair(InputAction.CallbackContext ctx) { }
 
-    IEnumerator StartTimer(float time, UnityAction action)
+    public IEnumerator StartTimer(float time, UnityAction action = null)
     {
         yield return new WaitForSeconds(time);
-        action();
+        action?.Invoke();
         yield return null;
     }
 
-    IEnumerator WaitCondition(Func<bool> condition, UnityAction action)
+    public IEnumerator WaitCondition(Func<bool> condition, UnityAction action = null)
     {
         while (!condition())
         {
             yield return new WaitForEndOfFrame();
         }
-        action();
+        action?.Invoke();
         yield return null;
     }
-    
-    IEnumerator WaitFrames(int frameNum, UnityAction action)
+
+    public IEnumerator WaitFrames(int frameNum, UnityAction action = null)
     {
         while (frameNum > 0)
         {
             yield return new WaitForEndOfFrame();
             frameNum--;
         }
-        action();
+        action?.Invoke();
         yield return null;
     }
 

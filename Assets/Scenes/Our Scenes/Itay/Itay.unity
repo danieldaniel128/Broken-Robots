@@ -724,18 +724,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1078377171 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1112845007, guid: 55db61c41d2463b4bb71f25fee9f6d7f,
-    type: 3}
-  m_PrefabInstance: {fileID: 4075106875039369368}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cde111c32f454f4eb5bd11064471f91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1128384353
 GameObject:
   m_ObjectHideFlags: 0
@@ -1245,7 +1233,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!114 &1985391844
 MonoBehaviour:
@@ -1274,38 +1262,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 645423476, guid: 55db61c41d2463b4bb71f25fee9f6d7f, type: 3}
-      propertyPath: m_Constraints
-      value: 90
-      objectReference: {fileID: 0}
     - target: {fileID: 1112845007, guid: 55db61c41d2463b4bb71f25fee9f6d7f, type: 3}
       propertyPath: stateGUI
       value: 
       objectReference: {fileID: 983209355}
-    - target: {fileID: 1112845007, guid: 55db61c41d2463b4bb71f25fee9f6d7f, type: 3}
-      propertyPath: dashRange
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1112845007, guid: 55db61c41d2463b4bb71f25fee9f6d7f, type: 3}
-      propertyPath: dashSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1112845007, guid: 55db61c41d2463b4bb71f25fee9f6d7f, type: 3}
-      propertyPath: jumpImpulse
-      value: 35
-      objectReference: {fileID: 0}
-    - target: {fileID: 1112845007, guid: 55db61c41d2463b4bb71f25fee9f6d7f, type: 3}
-      propertyPath: jumpChargeRate
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1715388950, guid: 55db61c41d2463b4bb71f25fee9f6d7f, type: 3}
-      propertyPath: m_Constraints
-      value: 90
-      objectReference: {fileID: 0}
     - target: {fileID: 301645121796722906, guid: 55db61c41d2463b4bb71f25fee9f6d7f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 301645121796722906, guid: 55db61c41d2463b4bb71f25fee9f6d7f,
         type: 3}
@@ -1356,46 +1320,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4359750826278430371, guid: 55db61c41d2463b4bb71f25fee9f6d7f,
-        type: 3}
-      propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4359750826278430371, guid: 55db61c41d2463b4bb71f25fee9f6d7f,
-        type: 3}
-      propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4359750826278430371, guid: 55db61c41d2463b4bb71f25fee9f6d7f,
-        type: 3}
-      propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1078377171}
-    - target: {fileID: 4359750826278430371, guid: 55db61c41d2463b4bb71f25fee9f6d7f,
-        type: 3}
-      propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4359750826278430371, guid: 55db61c41d2463b4bb71f25fee9f6d7f,
-        type: 3}
-      propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Dash
-      objectReference: {fileID: 0}
-    - target: {fileID: 4359750826278430371, guid: 55db61c41d2463b4bb71f25fee9f6d7f,
-        type: 3}
-      propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PlayerController, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 4359750826278430371, guid: 55db61c41d2463b4bb71f25fee9f6d7f,
-        type: 3}
-      propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 7717978239355536518, guid: 55db61c41d2463b4bb71f25fee9f6d7f,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 8120123575667485091, guid: 55db61c41d2463b4bb71f25fee9f6d7f,
         type: 3}
