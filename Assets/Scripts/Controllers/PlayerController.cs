@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
     PlayerState state;
     Shock shock;
 
-    float inputDir, lookDir;
+    float inputDir, lookDir = 1;
 
     private void Awake()
     {

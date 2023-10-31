@@ -72,7 +72,7 @@ public class Shock : MonoBehaviour
     public void SetDirection(float xDirection)
     {
         Vector3 localPos = transform.localPosition;
-        localPos.x = Mathf.Abs(localPos.x) * xDirection;
+        localPos.x = range * xDirection;
         transform.localPosition = localPos;
     }
 
