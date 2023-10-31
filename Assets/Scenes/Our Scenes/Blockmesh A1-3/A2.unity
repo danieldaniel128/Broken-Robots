@@ -244,9 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40a7eab6fa0af0043820c5c4ffef43e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapManager: {fileID: 0}
   sceneToTransitionTo: A1
-  playerHP: 0
 --- !u!1 &33653425
 GameObject:
   m_ObjectHideFlags: 0

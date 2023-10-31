@@ -4,6 +4,8 @@ using UnityEngine;
 using System.IO;
 using UnityEditor.Experimental.GraphView;
 
+//This entire script isn't needed anymore, I kept it here for now just in case
+
 [System.Serializable]
 public class MapRoom
 {
@@ -49,8 +51,29 @@ public class MapJSON : MonoBehaviour
         File.WriteAllText(Application.dataPath + "/RoomState.json", stringOutput);
     }
 
-    public void outputUpdatedJSON(List<JSONReader> reader)
+    public void outputUpdatedJSON(List<MapRoom> roomList)
     {
+        string stringOutput = "";
 
+        foreach (var line in roomList)
+        {
+            stringOutput += JsonUtility.ToJson(line) + "\n";
+        }
+
+        Debug.Log(stringOutput);
+
+        File.WriteAllText(Application.dataPath + "/RoomState.json", stringOutput);
+    }
+
+    public List<MapRoom> ReadJSON()
+    {
+        string dataPath = Application.dataPath + "/RoomState.json";
+        string[] dataLines = File.ReadAllLines(dataPath);
+        List<MapRoom> reader = new List<MapRoom>();
+        foreach (string line in dataLines)
+        {
+            reader.Add(MapRoom.ReadFromJSON(line));
+        }
+        return reader;
     }
 }
