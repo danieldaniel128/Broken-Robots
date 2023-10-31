@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 645423476}
   m_Layer: 0
   m_Name: Levitation
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3288720229898705228}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 1715388951}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -229,7 +229,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 90
   m_CollisionDetection: 0
 --- !u!138 &1715388951
 FixedJoint:
@@ -257,9 +257,10 @@ GameObject:
   - component: {fileID: 301645121796722906}
   - component: {fileID: 1112845007}
   - component: {fileID: 4359750826278430371}
+  - component: {fileID: 2384700146615122823}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -277,6 +278,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7717978239355536518}
+  - {fileID: 1960376939037491666}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -298,8 +300,11 @@ MonoBehaviour:
   levMax: 2
   levMin: 1
   movSpeed: 5
-  jumpImpulse: 30
-  jumpChargeRate: 0.5
+  jumpImpulse: 35
+  jumpChargeRate: 1
+  dashSpeed: 5
+  dashRange: 5
+  stateGUI: {fileID: 0}
 --- !u!114 &4359750826278430371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,7 +412,19 @@ MonoBehaviour:
     m_ActionId: 84f95803-d2a7-44c8-bd82-3428f63c7544
     m_ActionName: Robot/Repair[/Keyboard/d]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1112845007}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: Dash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 713dcc9d-57ca-45d8-8421-92b456dfb8d6
     m_ActionName: Robot/Dash[/Keyboard/shift]
   m_NeverAutoSwitchControlSchemes: 0
@@ -415,6 +432,26 @@ MonoBehaviour:
   m_DefaultActionMap: Robot
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &2384700146615122823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8120123575667485091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5031a79cc3887c94fadf5a277a158578, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 9
+  _currentHealth: 7
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  OnChangeValue:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &2300402685328076908
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -494,4 +531,84 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c681d807bfb69fc448bac6af7d1086b6,
     type: 3}
   m_PrefabInstance: {fileID: 2300402685328076908}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8738537624947941567
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 301645121796722906}
+    m_Modifications:
+    - target: {fileID: 7093501307953799533, guid: e50db60f8f1a9244a859f05c47b8d5ff,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7093501307953799533, guid: e50db60f8f1a9244a859f05c47b8d5ff,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 7093501307953799533, guid: e50db60f8f1a9244a859f05c47b8d5ff,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7093501307953799533, guid: e50db60f8f1a9244a859f05c47b8d5ff,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7093501307953799533, guid: e50db60f8f1a9244a859f05c47b8d5ff,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7093501307953799533, guid: e50db60f8f1a9244a859f05c47b8d5ff,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7093501307953799533, guid: e50db60f8f1a9244a859f05c47b8d5ff,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7093501307953799533, guid: e50db60f8f1a9244a859f05c47b8d5ff,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7093501307953799533, guid: e50db60f8f1a9244a859f05c47b8d5ff,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7093501307953799533, guid: e50db60f8f1a9244a859f05c47b8d5ff,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7093501307953799533, guid: e50db60f8f1a9244a859f05c47b8d5ff,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7233140446384465350, guid: e50db60f8f1a9244a859f05c47b8d5ff,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayerShock
+      objectReference: {fileID: 0}
+    - target: {fileID: 7233140446384465350, guid: e50db60f8f1a9244a859f05c47b8d5ff,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e50db60f8f1a9244a859f05c47b8d5ff, type: 3}
+--- !u!4 &1960376939037491666 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7093501307953799533, guid: e50db60f8f1a9244a859f05c47b8d5ff,
+    type: 3}
+  m_PrefabInstance: {fileID: 8738537624947941567}
   m_PrefabAsset: {fileID: 0}

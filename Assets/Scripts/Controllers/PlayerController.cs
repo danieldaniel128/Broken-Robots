@@ -25,9 +25,15 @@ public class PlayerController : MonoBehaviour
     }
 
     PlayerState state;
+    Shock shock;
 
     float inputDir;
-    // Start is called before the first frame update
+
+    private void Awake()
+    {
+        shock = GetComponentInChildren<Shock>(true);
+    }
+
     void Start()
     {
         movementLock = false;
@@ -55,7 +61,8 @@ public class PlayerController : MonoBehaviour
     }
     private void LateUpdate()
     {
-        stateGUI.text = state.ToString();
+        if (stateGUI is not null)
+            stateGUI.text = state.ToString();
     }
 
     void Levitate(float distanceFloor) {
@@ -145,18 +152,28 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void Shock(InputAction.CallbackContext ctx) { }
+    public void Shock(InputAction.CallbackContext ctx) { 
+     if (ctx.phase == InputActionPhase.Performed)
+        {
+            movementLock = true;
+            LockGravity(true);
+            StartCoroutine(shock.Perform(this, () => {
+                movementLock = false;
+                LockGravity(false);
+            }));
+        }
+    }
     public void Purify(InputAction.CallbackContext ctx) { }
     public void Repair(InputAction.CallbackContext ctx) { }
 
-    IEnumerator StartTimer(float time, UnityAction action)
+    public IEnumerator StartTimer(float time, UnityAction action = null)
     {
         yield return new WaitForSeconds(time);
         action();
         yield return null;
     }
 
-    IEnumerator WaitCondition(Func<bool> condition, UnityAction action)
+    public IEnumerator WaitCondition(Func<bool> condition, UnityAction action = null)
     {
         while (!condition())
         {
@@ -165,8 +182,8 @@ public class PlayerController : MonoBehaviour
         action();
         yield return null;
     }
-    
-    IEnumerator WaitFrames(int frameNum, UnityAction action)
+
+    public IEnumerator WaitFrames(int frameNum, UnityAction action = null)
     {
         while (frameNum > 0)
         {
