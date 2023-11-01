@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
@@ -14,9 +15,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float levForce = 1, levMax = 2, levMin = .5f, movSpeed = 5, jumpImpulse = 1, jumpChargeRate = 1, dashSpeed = 1, dashRange = 1;
     float levMult = 1, speedMult = 1, jumpForce;
     bool canJump, jumpLock, isGrounded, dashAvailable, movementLock;
+    bool rememberDash;
     const float jumpTimer = .5f;
-
     [SerializeField]TextMeshProUGUI stateGUI;
+
+
+    [Header("Purify"), SerializeField] float radius;
+    [SerializeField] int pulseStartFrames, pulseActiveFrames, pulseRecoveryFrames;
+    EnemyStatus target;
+    Coroutine purify;
 
     enum PlayerState { 
         Normal,
@@ -32,6 +39,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         shock = GetComponentInChildren<Shock>(true);
+        target = null;
     }
 
     void Start()
@@ -152,6 +160,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void ActionLock(bool isLock)
+    {
+        if (isLock)
+        {
+            rememberDash = dashAvailable;
+        }
+        dashAvailable = isLock ? false : rememberDash;
+        movementLock = isLock;
+        LockGravity(isLock);
+        speedMult = isLock ? 0 : 1;
+        levMult = isLock ? 0 : 1;
+    }
+
     public void Shock(InputAction.CallbackContext ctx) {
         if (!shock.isAvailable) return;
         switch (ctx.phase)
@@ -163,24 +184,58 @@ public class PlayerController : MonoBehaviour
                 }
             case InputActionPhase.Performed:
                 {
-                    bool hadDash = dashAvailable;
-                    dashAvailable = false;
-                    movementLock = true;
-                    LockGravity(true);
-                    speedMult = 0;
-                    levMult = 0;
-                    StartCoroutine(shock.Perform(this, () => {
-                        movementLock = false;
-                        LockGravity(false);
-                        speedMult = 1;
-                        levMult = 1;
-                        dashAvailable = hadDash;
-                    }));
+                    ActionLock(true);
+                    StartCoroutine(shock.Perform(this, () =>  ActionLock(false)));
                     break;
                 }
         }
     }
-    public void Purify(InputAction.CallbackContext ctx) { }
+    public void Purify(InputAction.CallbackContext ctx)
+    {
+        switch (ctx.phase)
+        {
+            case InputActionPhase.Started:
+                {
+                    Debug.Log("Looking for Purify Target");
+                    target = Physics.OverlapSphere(body.position, radius)
+                         .OrderBy(c => Vector3.Distance(body.position, c.transform.position))
+                         .FirstOrDefault(c => c.TryGetComponent<EnemyStatus>(out EnemyStatus enemy) && enemy.IsDead && !enemy.IsPurify)?.GetComponent<EnemyStatus>();
+                    break;
+                }
+            case InputActionPhase.Performed:
+                {
+                    if (target is not null)
+                    {
+                        Debug.Log($"Purifying {target.gameObject.name}");
+                        ActionLock(true);
+                        purify = StartCoroutine(PurifyRoutine(target));
+                    }
+                    break;
+                }
+            default: 
+                {
+                    if (purify is not null) 
+                    { 
+                        StopCoroutine(purify); 
+                        purify = null;
+                        ActionLock(false);
+                        Debug.Log($"Purifying status - {target.IsPurify}");
+                    }
+                    break; 
+                }
+        }
+    }
+    
+    IEnumerator PurifyRoutine(EnemyStatus target)
+    {
+        yield return WaitFrames(pulseStartFrames);
+        yield return WaitFrames(pulseActiveFrames);
+        target.IsPurify = true;
+        yield return WaitFrames(pulseRecoveryFrames);
+        ActionLock(false);
+        yield return null;
+    }
+
     public void Repair(InputAction.CallbackContext ctx) { }
 
     public IEnumerator StartTimer(float time, UnityAction action = null)
