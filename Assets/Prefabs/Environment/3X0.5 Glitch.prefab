@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3098855112852812259}
   m_Layer: 0
   m_Name: 3X0.5 Glitch
-  m_TagString: Untagged
+  m_TagString: Spikes
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
