@@ -2291,6 +2291,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 332967191, guid: 142f005f041247f4aba03da033431397, type: 3}
+      propertyPath: _currentHealth
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4435055155585234222, guid: 142f005f041247f4aba03da033431397,
         type: 3}
       propertyPath: m_Name
@@ -3184,7 +3188,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 657785201}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &1003256786
+--- !u!54 &1003256780
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3195,11 +3199,27 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1003256788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003256779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 996a616cc6c63414ea4b3cc7589f58cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDead: 0
+  IsAttacking: 0
+  IsIdle: 0
+  IsFlying: 0
 --- !u!1 &1010307965
 GameObject:
   m_ObjectHideFlags: 0
@@ -6054,6 +6074,16 @@ PrefabInstance:
     - target: {fileID: 1715388950, guid: 55db61c41d2463b4bb71f25fee9f6d7f, type: 3}
       propertyPath: m_Constraints
       value: 122
+      objectReference: {fileID: 0}
+    - target: {fileID: 226685740030808670, guid: 55db61c41d2463b4bb71f25fee9f6d7f,
+        type: 3}
+      propertyPath: damage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 226685740030808670, guid: 55db61c41d2463b4bb71f25fee9f6d7f,
+        type: 3}
+      propertyPath: knockback
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 301645121796722906, guid: 55db61c41d2463b4bb71f25fee9f6d7f,
         type: 3}
