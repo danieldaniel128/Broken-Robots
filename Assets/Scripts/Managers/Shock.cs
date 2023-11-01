@@ -9,17 +9,20 @@ using UnityEngine.Events;
 public class Shock : MonoBehaviour
 {
     [SerializeField] int damage;
-    [SerializeField] float range, knockback;
+    [SerializeField] float range, knockback, cooldown;
+    float timer;
     [Header("FrameData"), SerializeField] int startFrames;
     [SerializeField] int activeFrames, recoveryFrames;
     Collider c;
     Renderer r;
+    List<EnemyStatus> hits;
 
-    List<NavMeshAgent> hits;
+    public bool isAvailable => timer <= 0;
 
     private void Awake()
     {
-        hits = new List<NavMeshAgent>();
+        timer = 0;
+        hits = new List<EnemyStatus>();
         c = GetComponent<BoxCollider>();
         r = GetComponent<MeshRenderer>();
     }
@@ -27,7 +30,7 @@ public class Shock : MonoBehaviour
     public float Range => range;
 
     public IEnumerator Perform(PlayerController player, UnityAction onFinish = null) {
-
+        timer = Mathf.Infinity;
         yield return StartCoroutine(player.WaitFrames(startFrames));
         //turn all on
         c.enabled = true;
@@ -36,35 +39,33 @@ public class Shock : MonoBehaviour
         // turn all off
         c.enabled = false;
         r.enabled = false;
-        hits.AsEnumerable().All(agent => agent.isStopped = false);
         hits.Clear();
         yield return StartCoroutine(player.WaitFrames(recoveryFrames));
 
         onFinish?.Invoke();
+        timer = cooldown;
         
         yield return null;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void Update()
     {
-        Debug.Log($"{other.name} triggered");
-        if (other.TryGetComponent<Health>(out Health enemyHealth))
+        timer -= Time.deltaTime;
+        foreach (EnemyStatus enemy in hits)
         {
-            Debug.Log("health");
-            enemyHealth.TakeDamage(damage);
-        }
-        if (other.TryGetComponent<NavMeshAgent>(out NavMeshAgent enemyAgent))
-        {
-            enemyAgent.isStopped = true;
-            hits.Add(enemyAgent);
+            enemy.transform.position += knockback * Mathf.Sign(transform.localPosition.x) * Time.deltaTime * Vector3.right;
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<NavMeshAgent>(out NavMeshAgent enemyAgent))
+        if (other.TryGetComponent<EnemyStatus>(out EnemyStatus enemy) && !enemy.IsDead)
         {
-            enemyAgent.Move(Mathf.Sign(transform.localPosition.x) * knockback * Time.fixedDeltaTime * Vector3.right);
+            hits.Add(enemy);
+            if (enemy.TryGetComponent<Health>(out Health enemyHealth))
+            {
+                enemyHealth.TakeDamage(damage);
+            }
         }
     }
 

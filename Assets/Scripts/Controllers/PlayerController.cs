@@ -153,6 +153,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Shock(InputAction.CallbackContext ctx) {
+        if (!shock.isAvailable) return;
         switch (ctx.phase)
         {
             case InputActionPhase.Started:

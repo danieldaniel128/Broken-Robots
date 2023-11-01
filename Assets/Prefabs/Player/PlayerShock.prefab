@@ -50,6 +50,7 @@ MonoBehaviour:
   damage: 1
   range: 2
   knockback: 20
+  cooldown: 0.5
   startFrames: 10
   activeFrames: 10
   recoveryFrames: 10
