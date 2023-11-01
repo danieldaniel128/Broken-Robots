@@ -5,12 +5,55 @@ using UnityEngine;
 public class ProjectileSpawner : MonoBehaviour
 {
     [SerializeField] GameObject _projectilePrefab;
-    [SerializeField] Transform target;
+
+    public int poolSize = 10;
+
+    private List<GameObject> projectilePool = new List<GameObject>();
+    private Transform spawnerGameObject;
+
+    private void Start()
+    {
+        spawnerGameObject = transform;
+        InitializeObjectPool();
+    }
+
+    private void InitializeObjectPool()
+    {
+        for (int i = 0; i < poolSize; i++)
+        {
+            GameObject projectile = Instantiate(_projectilePrefab, transform.position, Quaternion.identity, spawnerGameObject);
+            projectile.SetActive(false);
+            projectilePool.Add(projectile);
+        }
+    }
+
+    public GameObject GetPooledProjectile()
+    {
+        for (int i = 0; i < projectilePool.Count; i++)
+        {
+            if (!projectilePool[i].activeSelf)//searches for inactive projectile
+            {
+                return projectilePool[i];
+            }
+        }
+
+        // If there are no inactive projectiles in the pool, you can optionally expand the pool by instantiating more objects.
+        GameObject newProjectile = Instantiate(_projectilePrefab, transform.position, Quaternion.identity,spawnerGameObject);
+        newProjectile.SetActive(false);
+        projectilePool.Add(newProjectile);
+        return newProjectile;
+    }
 
 
     public void SpawnProjectile(Vector3 direction)
     {
-        GameObject projectile = Instantiate(_projectilePrefab, transform.position, Quaternion.identity);
-        projectile.GetComponent<Projectile>().fireDirection = direction;
+        GameObject projectileGameObject = GetPooledProjectile();
+        Projectile projectile = projectileGameObject.GetComponent<Projectile>();
+        projectile.fireDirection = direction;
+        projectile.InitProjectileValues();
+        projectileGameObject.SetActive(true);
+        projectile.FireProjectile();
     }
+
+    
 }
