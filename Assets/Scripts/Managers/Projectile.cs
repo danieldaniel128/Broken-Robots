@@ -10,10 +10,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] Rigidbody projectileRigidBody;
     public Vector3 fireDirection;
 
-    private void Start()
-    {
-        projectileRigidBody.AddForce(fireDirection*_speed,ForceMode.Impulse);
-    }
+
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -21,7 +18,17 @@ public class Projectile : MonoBehaviour
         {
             collision.gameObject.GetComponentInParent<Health>().TakeDamage(_damage);
         }
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
+    public void InitProjectileValues()
+    {
+        transform.position = transform.position;
+        projectileRigidBody.velocity = Vector3.zero;
+    }
+
+    public void FireProjectile()
+    {
+        projectileRigidBody.AddForce(fireDirection * _speed, ForceMode.Impulse);
+    }
 }
