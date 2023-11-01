@@ -1,5 +1,53 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1761877745
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1761877746}
+  - component: {fileID: 1761877747}
+  m_Layer: 0
+  m_Name: Spawning Projectile Position
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1761877746
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761877745}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.519, y: 0.312, z: 0.054}
+  m_LocalScale: {x: 0.84499997, y: 0.84499997, z: 0.84499997}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8545554640883441696}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1761877747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761877745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67fe61f99c736cd4abcd2dc67e99f417, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _projectilePrefab: {fileID: 7753998028367057172, guid: bb9b9cd664f70ef41b7e7a444a7e668f,
+    type: 3}
+  poolSize: 10
+  spawnerGameObject: {fileID: 0}
 --- !u!1 &4060531752005794303
 GameObject:
   m_ObjectHideFlags: 0
@@ -43,8 +91,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.7976761, y: 1, z: 1}
+  m_Center: {x: -0.10116196, y: 0, z: 0}
 --- !u!1 &4435055155585234222
 GameObject:
   m_ObjectHideFlags: 0
@@ -74,11 +122,12 @@ Transform:
   m_GameObject: {fileID: 4435055155585234222}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.29, y: 1, z: 0}
-  m_LocalScale: {x: 1.0000002, y: 1, z: 1.0000002}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 4.56, y: 4.56, z: 4.56}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8970653626422866039}
   - {fileID: 1491432766636828272}
+  - {fileID: 1761877746}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -105,7 +154,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 0
+  m_Speed: 3
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 10
@@ -113,8 +162,8 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 1
-  m_BaseOffset: 0.5
+  m_Height: 1.42
+  m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &2118415719
@@ -157,8 +206,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4b016223bbb6b34386dabaf0ed378bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Agent: {fileID: 0}
-  AIStates: []
+  Agent: {fileID: 657785203}
+  TargetPlayer: {fileID: 0}
+  _enemyChipPrefab: {fileID: 0}
+  BossWallLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  _distanceFromWall: 2
+  _rotationSpeed: 5
+  _projectileSpawner: {fileID: 1761877747}
+  _attackCooldown: 3.5
 --- !u!1001 &1384886909309370779
 PrefabInstance:
   m_ObjectHideFlags: 0
