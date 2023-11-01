@@ -14,7 +14,11 @@ public class ChipPatrolState : ChipAIState
         _patrolPoints = points;
         _patrolCounter = 0;
     }
-
+    public void SetNewPatrolPoints(Vector3[] points)
+    {
+        _patrolPoints = points;
+        _patrolCounter = 0;
+    }
     public override void EnterState(ChipStateMachine stateMachine)
     {
         //set the first destination before the update state event 

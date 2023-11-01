@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
@@ -41,6 +42,7 @@ public class ChipStateMachine : MonoBehaviour
     private float originalZPosition;
 
     public bool IsDead = false;
+    [SerializeField] Collider _chipCollider;
 
     private void Start()
     {
@@ -53,7 +55,10 @@ public class ChipStateMachine : MonoBehaviour
     private void Update()
     {
         if (IsDead)
+        {
+            CurrentState.UpdateState(this);
             return;
+        }
         OnSecondFrame?.Invoke();//event that happens on second frame only
         CurrentState.UpdateState(this);
         RotateAgentTowardsDestination();
@@ -77,11 +82,13 @@ public class ChipStateMachine : MonoBehaviour
         if (IsUsingSpecificPatrolPoints)
         {
             PatrolPoints = SpecificPatrolPoints;
-            return;
         }
-        PatrolPoints = new Vector3[2];
-        PatrolPoints[0] = PatrolStartPoint + Vector3.right * _patrolRange;
-        PatrolPoints[1] = PatrolStartPoint + Vector3.left * _patrolRange;
+        else
+        {
+            PatrolPoints = new Vector3[2];
+            PatrolPoints[0] = PatrolStartPoint + Vector3.right * _patrolRange;
+            PatrolPoints[1] = PatrolStartPoint + Vector3.left * _patrolRange;
+        }
     }
 
     /// <summary>
@@ -185,9 +192,14 @@ public class ChipStateMachine : MonoBehaviour
 
     public void OnChipDeath()
     {
+        Debug.Log("chip is dead");
         IsDead = true;
         IsUsingSpecificPatrolPoints = true;
+        _chipCollider.isTrigger = true;
         SetPatrolPoints();
+        ChipPatrolState chipPatrolState = AIStates.Find(c => c is ChipPatrolState) as ChipPatrolState;
+        chipPatrolState.SetNewPatrolPoints(PatrolPoints);
+        ChangeState(chipPatrolState);
     }
 
 }

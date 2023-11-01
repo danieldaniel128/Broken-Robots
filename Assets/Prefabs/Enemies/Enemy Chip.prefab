@@ -339,6 +339,7 @@ GameObject:
   - component: {fileID: 1922912554690399444}
   - component: {fileID: 657785203}
   - component: {fileID: 2118415719}
+  - component: {fileID: 332967191}
   m_Layer: 0
   m_Name: Enemy Chip
   m_TagString: Untagged
@@ -420,7 +421,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4435055155585234222}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -460,7 +461,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Agent: {fileID: 657785203}
-  _patrolRange: 7
+  _patrolRange: 2.52
+  SpecificPatrolPoints:
+  - {x: -31.5, y: -2.6, z: 1.6}
+  - {x: -27.1, y: -2.6, z: 1.6}
+  IsUsingSpecificPatrolPoints: 0
   ScanRadius: 3
   ChaseRadius: 6
   CurrentSearchRadius: 3
@@ -471,3 +476,37 @@ MonoBehaviour:
   _maxSpeed: 3
   _acceleration: 3
   AttackRadius: 1
+  IsDead: 0
+  _chipCollider: {fileID: 1922912554690399444}
+--- !u!114 &332967191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4435055155585234222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5031a79cc3887c94fadf5a277a158578, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 3
+  _currentHealth: 3
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2118415719}
+        m_TargetAssemblyTypeName: ChipStateMachine, Assembly-CSharp
+        m_MethodName: OnChipDeath
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnChangeValue:
+    m_PersistentCalls:
+      m_Calls: []
