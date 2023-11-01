@@ -8,10 +8,19 @@ public class BossStateMachine : MonoBehaviour
     public NavMeshAgent Agent;
     public List<BossAIState> AIStates;
     public BossAIState CurrentState { get; private set; }
+    public Transform TargetPlayer;
+
+
+    [SerializeField] GameObject _enemyChipPrefab;
+    public BossAIState CurrentSummonPrefab { get; set; }
+
     private void Start()
     {
         AIStates = new List<BossAIState>();
         AIStates.Add(new BossRangeAttackState());
+        AIStates.Add(new BossSummonTaskchipState());
+        CurrentState = AIStates.Find(c => c is BossRangeAttackState);
+        CurrentState.EnterState(this);
     }
 
     private void Update()

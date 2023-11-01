@@ -57,6 +57,7 @@ GameObject:
   - component: {fileID: 1922912554690399444}
   - component: {fileID: 657785203}
   - component: {fileID: 2118415719}
+  - component: {fileID: 35511641}
   m_Layer: 0
   m_Name: Boss Chip
   m_TagString: Untagged
@@ -123,7 +124,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4435055155585234222}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d8639b8e6ededb241ba0f9a83904b74c, type: 3}
   m_Name: 
@@ -144,6 +145,20 @@ MonoBehaviour:
   AttackRadius: 1
   IsDead: 0
   _chipCollider: {fileID: 0}
+--- !u!114 &35511641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4435055155585234222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4b016223bbb6b34386dabaf0ed378bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Agent: {fileID: 0}
+  AIStates: []
 --- !u!1001 &1384886909309370779
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyStatus : MonoBehaviour
 {
     public bool IsDead;
+    public bool IsShocked;
     public bool IsAttacking;
     public bool IsIdle;
     public bool IsFlying;

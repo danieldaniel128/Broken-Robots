@@ -70,7 +70,7 @@ public class ChipStateMachine : MonoBehaviour
         CurrentState.ExitState(this);
         CurrentState = newState;
         CurrentState.EnterState(this);
-        Debug.Log("CurrentState: " + CurrentState);
+        //Debug.Log("CurrentState: " + CurrentState);
     }
 
     #region State Machine Init
