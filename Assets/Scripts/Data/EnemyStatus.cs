@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class EnemyStatus : MonoBehaviour
 {
-    public bool IsDead;
+    public bool IsDead { get; set; }
     public bool IsPurify;
     public bool IsAttacking;
     public bool IsIdle;
     public bool IsFlying;
+
 }
