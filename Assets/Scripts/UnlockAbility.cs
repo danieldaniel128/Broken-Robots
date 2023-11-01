@@ -12,7 +12,7 @@ public class UnlockAbility : MonoBehaviour
     {
         if (abilityToUnlock.Equals("Dash"))
         {
-            mapManager.GetRoomCollectibleID("A3");
+            mapManager.GetRoomCollectibleID("A4_2");
             collectibleRef.SetActive(false);
             Debug.Log("Unlock Dash Here");
         }
