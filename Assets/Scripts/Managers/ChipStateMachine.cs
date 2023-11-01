@@ -20,6 +20,8 @@ public class ChipStateMachine : MonoBehaviour
 
     [Header("Patrol Parameters")]
     [SerializeField] private float _patrolRange;
+    public Vector3[] SpecificPatrolPoints;
+    public bool IsUsingSpecificPatrolPoints;
 
     [Header("Scan Parameters")]
     public float ScanRadius;
@@ -38,6 +40,8 @@ public class ChipStateMachine : MonoBehaviour
     Action OnSecondFrame;
     private float originalZPosition;
 
+    public bool IsDead = false;
+
     private void Start()
     {
         SetStateList();
@@ -48,6 +52,8 @@ public class ChipStateMachine : MonoBehaviour
 
     private void Update()
     {
+        if (IsDead)
+            return;
         OnSecondFrame?.Invoke();//event that happens on second frame only
         CurrentState.UpdateState(this);
         RotateAgentTowardsDestination();
@@ -68,6 +74,11 @@ public class ChipStateMachine : MonoBehaviour
     /// </summary>
     private void SetPatrolPoints()
     {
+        if (IsUsingSpecificPatrolPoints)
+        {
+            PatrolPoints = SpecificPatrolPoints;
+            return;
+        }
         PatrolPoints = new Vector3[2];
         PatrolPoints[0] = PatrolStartPoint + Vector3.right * _patrolRange;
         PatrolPoints[1] = PatrolStartPoint + Vector3.left * _patrolRange;
@@ -129,7 +140,7 @@ public class ChipStateMachine : MonoBehaviour
         if (PatrolPoints ==null || PatrolPoints.Length != 2)
             return;
             Gizmos.color = Color.blue;
-            Gizmos.DrawLine(PatrolPoints[0], PatrolPoints[1]);
+            Gizmos.DrawLine(PatrolStartPoint + Vector3.right * _patrolRange, PatrolStartPoint + Vector3.left * _patrolRange);
         switch (CurrentState)
         {
             case ChipAttackState:
@@ -141,6 +152,14 @@ public class ChipStateMachine : MonoBehaviour
         }
        // Gizmos.DrawLine(transform.position, Vector3.right * CurrentSearchRadius * transform.rotation.eulerAngles.)
 
+    }
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        if(!IsUsingSpecificPatrolPoints)
+            Gizmos.DrawLine(transform.position + Vector3.right * _patrolRange, transform.position + Vector3.left * _patrolRange);
+        else if(SpecificPatrolPoints != null && SpecificPatrolPoints.Length != 0)
+            Gizmos.DrawLine(SpecificPatrolPoints[0], SpecificPatrolPoints[SpecificPatrolPoints.Length-1]);
     }
 
     private void RotateAgentTowardsDestination()
@@ -162,6 +181,13 @@ public class ChipStateMachine : MonoBehaviour
         Vector3 newPosition = transform.position;
         newPosition.z = originalZPosition;
         transform.position = newPosition;
+    }
+
+    public void OnChipDeath()
+    {
+        IsDead = true;
+        IsUsingSpecificPatrolPoints = true;
+        SetPatrolPoints();
     }
 
 }

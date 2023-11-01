@@ -6,7 +6,7 @@ using static UnityEngine.GraphicsBuffer;
 public class ChipPatrolState : ChipAIState
 {
     private Vector3[] _patrolPoints;
-    private int _currentPatrolIndex => _patrolCounter % 2 ;
+    private int _currentPatrolIndex => _patrolCounter % _patrolPoints.Length;
     private int _patrolCounter;
 
     public ChipPatrolState(Vector3[] points)
@@ -33,6 +33,7 @@ public class ChipPatrolState : ChipAIState
             _patrolCounter++;
             stateMachine.Agent.SetDestination(_patrolPoints[_currentPatrolIndex]);
         }
+        if(!stateMachine.IsDead)
         stateMachine.ChangeState(stateMachine.AIStates.Find(c => c is ChipScanState));
     }
 
