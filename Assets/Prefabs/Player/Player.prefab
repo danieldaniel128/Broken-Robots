@@ -1958,7 +1958,7 @@ GameObject:
   - component: {fileID: 645423476}
   m_Layer: 0
   m_Name: Levitation
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2074,7 +2074,7 @@ GameObject:
   - component: {fileID: 1715388951}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2201,9 +2201,10 @@ GameObject:
   - component: {fileID: 301645121796722906}
   - component: {fileID: 1112845007}
   - component: {fileID: 4359750826278430371}
+  - component: {fileID: 2066609137}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2374,6 +2375,38 @@ MonoBehaviour:
   m_DefaultActionMap: Robot
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &2066609137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8120123575667485091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5031a79cc3887c94fadf5a277a158578, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 9
+  _currentHealth: 9
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  OnChangeValue:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: hpBar, Assembly-CSharp
+        m_MethodName: ModifyHP
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &7195172906968111
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2388,13 +2421,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7093501307953799533, guid: e50db60f8f1a9244a859f05c47b8d5ff,
         type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7093501307953799533, guid: e50db60f8f1a9244a859f05c47b8d5ff,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7093501307953799533, guid: e50db60f8f1a9244a859f05c47b8d5ff,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.00000009536743
       objectReference: {fileID: 0}
     - target: {fileID: 7093501307953799533, guid: e50db60f8f1a9244a859f05c47b8d5ff,
         type: 3}
@@ -2409,17 +2447,17 @@ PrefabInstance:
     - target: {fileID: 7093501307953799533, guid: e50db60f8f1a9244a859f05c47b8d5ff,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7093501307953799533, guid: e50db60f8f1a9244a859f05c47b8d5ff,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7093501307953799533, guid: e50db60f8f1a9244a859f05c47b8d5ff,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7093501307953799533, guid: e50db60f8f1a9244a859f05c47b8d5ff,
         type: 3}

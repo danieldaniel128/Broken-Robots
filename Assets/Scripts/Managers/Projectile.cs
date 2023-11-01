@@ -19,7 +19,7 @@ public class Projectile : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Health>().TakeDamage(_damage);
+            collision.gameObject.GetComponentInParent<Health>().TakeDamage(_damage);
         }
         Destroy(gameObject);
     }
