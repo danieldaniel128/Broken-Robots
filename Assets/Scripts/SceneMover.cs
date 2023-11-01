@@ -7,7 +7,7 @@ public class SceneMover : MonoBehaviour
 {
     public void LoadGameScene()
     {
-        SceneManager.LoadScene("A4 1", LoadSceneMode.Single);
+        SceneManager.LoadScene(1, LoadSceneMode.Single);
     }
 
     public void ExitGame()

@@ -11,8 +11,8 @@ public class UnlockAbility : MonoBehaviour
     private void OnTriggerEnter(Collider collider)
     {
         if (abilityToUnlock.Equals("Dash"))
-        {//Fix map design for that to work
-            //mapManager.GetRoomCollectibleID("A4");
+        {
+            mapManager.GetRoomCollectibleID("A3");
             collectibleRef.SetActive(false);
             Debug.Log("Unlock Dash Here");
         }

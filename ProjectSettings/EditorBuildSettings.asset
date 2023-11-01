@@ -5,13 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/Scenes/Our Scenes/Blockmesh A1-3/A1.unity
-    guid: ff7477a0e1972df4c9ef64f2f80f2312
+    path: Assets/Scenes/Our Scenes/Yotam/Main Menu.unity
+    guid: 245e4d3206ef76043982d035e2e15653
   - enabled: 1
-    path: Assets/Scenes/Our Scenes/Blockmesh A1-3/A2.unity
-    guid: db60f18e687e5fd4c90b41bef6c97dd9
+    path: Assets/Scenes/Our Scenes/Yotam/A4 1.unity
+    guid: c884e6121cd4b034990af823328c4439
   m_configObjects: {}
