@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Spikes
+  - Platform
+  - SceneGate
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
