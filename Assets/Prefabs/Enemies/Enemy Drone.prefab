@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4296565262421513922
+--- !u!1 &3148707315249806734
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,43 +8,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 9189514480014597962}
-  - component: {fileID: 3672437929096642727}
+  - component: {fileID: 2220489666842266014}
+  - component: {fileID: 6890728633147848307}
   m_Layer: 0
-  m_Name: Drone Collider
+  m_Name: Spawning Projectile Position
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &9189514480014597962
+--- !u!4 &2220489666842266014
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4296565262421513922}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.2308, z: 0}
-  m_LocalScale: {x: 1, y: 0.5384, z: 1}
+  m_GameObject: {fileID: 3148707315249806734}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.303, z: -0.176}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8461832560326561565}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3672437929096642727
-BoxCollider:
+--- !u!114 &6890728633147848307
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4296565262421513922}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_GameObject: {fileID: 3148707315249806734}
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67fe61f99c736cd4abcd2dc67e99f417, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _projectilePrefab: {fileID: 7753998028367057172, guid: 260966f9e01c10f49be1fca09151e2aa,
+    type: 3}
+  poolSize: 10
+  spawnerGameObject: {fileID: 0}
 --- !u!1 &4500754505380993555
 GameObject:
   m_ObjectHideFlags: 0
@@ -56,7 +59,6 @@ GameObject:
   - component: {fileID: 8461832560326561565}
   - component: {fileID: 1272379947}
   - component: {fileID: 1573017313}
-  - component: {fileID: 1573017312}
   m_Layer: 0
   m_Name: Enemy Drone
   m_TagString: Untagged
@@ -73,11 +75,11 @@ Transform:
   m_GameObject: {fileID: 4500754505380993555}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -11.34, y: 1.5609, z: -0.034877777}
-  m_LocalScale: {x: 1, y: 1, z: 1.0000002}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.69, y: 1.69, z: 1.69}
+  m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 9189514480014597962}
   - {fileID: 749612032050735941}
+  - {fileID: 2220489666842266014}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -104,7 +106,7 @@ MonoBehaviour:
   angle: 180
   rayRange: 1
   droneRigidbody: {fileID: 0}
-  _projectileSpawner: {fileID: 1573017312}
+  _projectileSpawner: {fileID: 6890728633147848307}
 --- !u!54 &1573017313
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -121,21 +123,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
---- !u!114 &1573017312
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4500754505380993555}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67fe61f99c736cd4abcd2dc67e99f417, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _projectilePrefab: {fileID: 7753998028367057172, guid: 260966f9e01c10f49be1fca09151e2aa,
-    type: 3}
-  poolSize: 10
 --- !u!1001 &1003618093060279470
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -146,7 +133,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: f348ac9c90e432a48bfeb074439fb338,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f348ac9c90e432a48bfeb074439fb338,
         type: 3}
@@ -156,7 +143,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: f348ac9c90e432a48bfeb074439fb338,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.59
+      value: -0.324
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f348ac9c90e432a48bfeb074439fb338,
         type: 3}
@@ -205,6 +192,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f348ac9c90e432a48bfeb074439fb338, type: 3}
+--- !u!1 &84715753647796735 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f348ac9c90e432a48bfeb074439fb338,
+    type: 3}
+  m_PrefabInstance: {fileID: 1003618093060279470}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &3613763893683852235
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 84715753647796735}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.84378004, y: 0.54778767, z: 1}
+  m_Center: {x: 0.017205954, y: 0.41781473, z: 0}
 --- !u!4 &749612032050735941 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f348ac9c90e432a48bfeb074439fb338,

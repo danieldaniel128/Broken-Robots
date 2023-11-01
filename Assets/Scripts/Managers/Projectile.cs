@@ -23,7 +23,6 @@ public class Projectile : MonoBehaviour
 
     public void InitProjectileValues()
     {
-        transform.position = transform.position;
         projectileRigidBody.velocity = Vector3.zero;
     }
 

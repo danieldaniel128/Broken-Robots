@@ -9,11 +9,10 @@ public class ProjectileSpawner : MonoBehaviour
     public int poolSize = 10;
 
     private List<GameObject> projectilePool = new List<GameObject>();
-    private Transform spawnerGameObject;
+    [SerializeField] private Transform spawnerGameObject;
 
     private void Start()
     {
-        spawnerGameObject = transform;
         InitializeObjectPool();
     }
 
@@ -51,6 +50,7 @@ public class ProjectileSpawner : MonoBehaviour
         Projectile projectile = projectileGameObject.GetComponent<Projectile>();
         projectile.fireDirection = direction;
         projectile.InitProjectileValues();
+        projectile.transform.position = transform.position;
         projectileGameObject.SetActive(true);
         projectile.FireProjectile();
     }
