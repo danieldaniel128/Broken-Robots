@@ -139,6 +139,7 @@ public class DroneStateMachine : MonoBehaviour
 
     void ShootPlayer()
     {
+        targetDirection = target.position - transform.position;
         _projectileSpawner.SpawnProjectile(targetDirection);
     }
     void ActivateAttackCooldown()
