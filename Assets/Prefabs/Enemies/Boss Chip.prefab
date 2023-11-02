@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: 2118415719}
   - component: {fileID: 35511641}
   - component: {fileID: 1344824276}
+  - component: {fileID: 1344824277}
   m_Layer: 0
   m_Name: Boss Chip
   m_TagString: Untagged
@@ -209,14 +210,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Agent: {fileID: 657785203}
   TargetPlayer: {fileID: 0}
-  _enemyChipPrefab: {fileID: 0}
-  BossWallLayer:
+  _bossWallLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 0
   _distanceFromWall: 3
   _rotationSpeed: 5
+  _enemyBasicChipPrefab: {fileID: 4435055155585234222, guid: 142f005f041247f4aba03da033431397,
+    type: 3}
+  _enemyHighSpeedChip: {fileID: 4435055155585234222, guid: 0ab263987f5a387419826bd27f83a6e2,
+    type: 3}
+  _spawnSummonPositionLeftWall: {fileID: 0}
+  _spawnSummonPositionRightWall: {fileID: 0}
+  _summonAttackCooldown: 0
   _projectileSpawner: {fileID: 1761877747}
-  _attackCooldown: 3.5
+  _lazerAttackCooldown: 0
 --- !u!114 &1344824276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,6 +240,38 @@ MonoBehaviour:
   IsAttacking: 0
   IsIdle: 0
   IsFlying: 0
+--- !u!114 &1344824277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4435055155585234222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5031a79cc3887c94fadf5a277a158578, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 9
+  _currentHealth: 9
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  OnChangeValue:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: hpBar, Assembly-CSharp
+        m_MethodName: ModifyHP
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1384886909309370779
 PrefabInstance:
   m_ObjectHideFlags: 0

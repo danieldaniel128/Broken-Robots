@@ -6,21 +6,40 @@ using UnityEngine.AI;
 public class BossStateMachine : MonoBehaviour
 {
     public NavMeshAgent Agent;
-    public List<BossAIState> AIStates;
-    public BossAIState CurrentState { get; private set; }
     public Transform TargetPlayer;
+    public List<BossAIState> AIStates { get; private set; }
+    public BossAIState CurrentState { get; private set; }
 
 
-    [SerializeField] GameObject _enemyChipPrefab;
-    public BossAIState CurrentSummonPrefab { get; set; }
-    public LayerMask BossWallLayer;
+    [Header("Boss Movement")]
+    [SerializeField] private LayerMask _bossWallLayer;
     [SerializeField] private float _distanceFromWall;
     [SerializeField] float _rotationSpeed;
 
-    [SerializeField] private ProjectileSpawner _projectileSpawner;
 
-    [SerializeField] private float _attackLazerCooldown;
-    private float _attackLaserTimer;
+
+    [Header("Summon Ability")]
+    [SerializeField] private GameObject _enemyBasicChipPrefab;
+    [SerializeField] private GameObject _enemyHighSpeedChip;
+    [SerializeField] private Transform _spawnSummonPositionLeftWall;
+    [SerializeField] private Transform _spawnSummonPositionRightWall;
+    [SerializeField] private float _summonAttackCooldown;
+    //attack timer
+    private float _summonAttackTimer;
+    bool _hasSummonAttacked;
+
+    private GameObject _currentSummonPrefab;
+    private Transform _currentSummonSpawnPos;
+
+
+
+
+
+    [Header("Lazer Attack")]
+    [SerializeField] private ProjectileSpawner _projectileSpawner;
+    [SerializeField] private float _lazerAttackCooldown;
+    private float _laserAttackTimer;
+    bool _hasLaserAttacked;
 
 
     private void Start()
@@ -34,11 +53,19 @@ public class BossStateMachine : MonoBehaviour
 
     private void Update()
     {
-        CurrentState.UpdateState(this);
+        //CurrentState.UpdateState(this);
+
+        //movement
         RotateAgentTowardsDestination();
         MoveBossToCorners();
-        AttackPlayer();
+
+        //lazer attack
+        LaserAttackPlayer();
         ActivateLaserAttackCooldown();
+
+        //summon attack
+        SummonAttackPlayer();
+        ActivateSummonAttackCooldown();
         //KeepsTheAgentOnZAxis();
     }
 
@@ -71,8 +98,8 @@ public class BossStateMachine : MonoBehaviour
     }
     private void MoveBossToCorners()
     {
-            Ray ray = new Ray(transform.position, GetBossDirectionToPlayer()); // Create a ray from the mouse position
-            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, BossWallLayer))
+            Ray ray = new Ray(transform.position, GetBossDirectionToPlayer()); //
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, _bossWallLayer))
             {
                 float distance = hit.distance;
                 Agent.SetDestination(transform.position + GetBossDirectionToPlayer() * distance -GetBossDirectionToPlayer() * _distanceFromWall);
@@ -89,28 +116,60 @@ public class BossStateMachine : MonoBehaviour
     }
     
 
-    bool hasLaserAttacked;
-    void AttackPlayer()
+    void LaserAttackPlayer()
     {
-        if (hasLaserAttacked)
+        if (_hasLaserAttacked)
             return;
         ShootPlayer();
-        hasLaserAttacked = true;
+        _hasLaserAttacked = true;
     }
+
+    void SummonAttackPlayer()
+    {
+        if (_hasSummonAttacked)
+            return;
+        SummonEnemies();
+        _hasSummonAttacked = true;
+    }
+
+
     void ShootPlayer()
     {
         _projectileSpawner.SpawnProjectile(TargetPlayer.position - _projectileSpawner.transform.position);
     }
+
+    void SummonEnemies()
+    {
+        if (GetBossDirectionToPlayer() == Vector3.right)
+        {
+            _currentSummonPrefab = _enemyBasicChipPrefab;
+            _currentSummonSpawnPos = _spawnSummonPositionLeftWall;
+            Debug.Log("spawn from right");
+        }
+        Instantiate(_currentSummonPrefab, _currentSummonSpawnPos.position, Quaternion.identity, _currentSummonSpawnPos);
+    }
     void ActivateLaserAttackCooldown()
     {
-        if (!hasLaserAttacked)
+        if (!_hasLaserAttacked)
             return;
-        if (_attackLaserTimer < _attackLazerCooldown)
-            _attackLaserTimer += Time.deltaTime;
+        if (_laserAttackTimer < _lazerAttackCooldown)
+            _laserAttackTimer += Time.deltaTime;
         else
         {
-            hasLaserAttacked = false;
-            _attackLaserTimer = 0;
+            _hasLaserAttacked = false;
+            _laserAttackTimer = 0;
+        }
+    }
+    void ActivateSummonAttackCooldown()
+    {
+        if (!_hasSummonAttacked)
+            return;
+        if (_summonAttackTimer < _summonAttackCooldown)
+            _summonAttackTimer += Time.deltaTime;
+        else
+        {
+            _hasSummonAttacked = false;
+            _summonAttackTimer = 0;
         }
     }
 }
