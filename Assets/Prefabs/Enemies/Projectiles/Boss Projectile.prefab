@@ -111,8 +111,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68d8cb20d84863b4384f15e1a7126fa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 3
-  _speed: 3
+  _damage: 1
+  _speed: 2
   projectileRigidBody: {fileID: 527811553746056132}
   fireDirection: {x: 0, y: 0, z: 0}
 --- !u!54 &527811553746056132

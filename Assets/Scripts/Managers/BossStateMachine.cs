@@ -19,8 +19,8 @@ public class BossStateMachine : MonoBehaviour
 
     [SerializeField] private ProjectileSpawner _projectileSpawner;
 
-    [SerializeField] private float _attackCooldown;
-    private float _attackTimer;
+    [SerializeField] private float _attackLazerCooldown;
+    private float _attackLaserTimer;
 
 
     private void Start()
@@ -38,7 +38,7 @@ public class BossStateMachine : MonoBehaviour
         RotateAgentTowardsDestination();
         MoveBossToCorners();
         AttackPlayer();
-        ActivateAttackCooldown();
+        ActivateLaserAttackCooldown();
         //KeepsTheAgentOnZAxis();
     }
 
@@ -87,37 +87,30 @@ public class BossStateMachine : MonoBehaviour
         else
             return Vector3.left;
     }
-    //private void KeepsTheAgentOnZAxis()
-    //{
-    //    Vector3 newPosition = transform.position;
-    //    newPosition.z = originalZPosition;
-    //    transform.position = newPosition;
-    //}
+    
 
-
-
-    bool hasAttacked;
+    bool hasLaserAttacked;
     void AttackPlayer()
     {
-        if (hasAttacked)
+        if (hasLaserAttacked)
             return;
         ShootPlayer();
-        hasAttacked = true;
+        hasLaserAttacked = true;
     }
     void ShootPlayer()
     {
         _projectileSpawner.SpawnProjectile(TargetPlayer.position - _projectileSpawner.transform.position);
     }
-    void ActivateAttackCooldown()
+    void ActivateLaserAttackCooldown()
     {
-        if (!hasAttacked)
+        if (!hasLaserAttacked)
             return;
-        if (_attackTimer < _attackCooldown)
-            _attackTimer += Time.deltaTime;
+        if (_attackLaserTimer < _attackLazerCooldown)
+            _attackLaserTimer += Time.deltaTime;
         else
         {
-            hasAttacked = false;
-            _attackTimer = 0;
+            hasLaserAttacked = false;
+            _attackLaserTimer = 0;
         }
     }
 }
