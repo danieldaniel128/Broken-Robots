@@ -11,6 +11,9 @@ public class BossStateMachine : MonoBehaviour
     public Transform TargetPlayer;
     public List<BossAIState> AIStates { get; private set; }
     public BossAIState CurrentState { get; private set; }
+    bool stopMove = false;
+
+    Vector3 startPos;
 
 
     [Header("Boss Movement")]
@@ -49,25 +52,33 @@ public class BossStateMachine : MonoBehaviour
 
     [SerializeField] List<GameObject> _summonsList;
 
+    private void Start()
+    {
+        startPos = transform.position;
+    }
     private void Update()
     {
         //CurrentState.UpdateState(this);
 
         //movement
         RotateAgentTowardsDestination();
-        MoveBossToCorners();
-
-        //lazer attack
-        if (!_isRollingAttackOn)
+        if (!stopMove)
         {
-            LaserAttackPlayer();
-            ActivateLaserAttackCooldown();
+
+            MoveBossToCorners();
+
+            //lazer attack
+            if (!_isRollingAttackOn)
+            {
+                LaserAttackPlayer();
+                ActivateLaserAttackCooldown();
+            }
+
+            //summon attack
+            SummonAttackPlayer();
+            ActivateSummonAttackCooldown();
+
         }
-
-        //summon attack
-        SummonAttackPlayer();
-        ActivateSummonAttackCooldown();
-
         GetBossTo0ZAxis();
         //KeepsTheAgentOnZAxis();
     }
@@ -90,7 +101,8 @@ public class BossStateMachine : MonoBehaviour
 
     public void OnBossDeath()
     {
-
+        stopMove = true;
+        Agent.SetDestination(startPos);
     }
     private void MoveBossToCorners()
     {

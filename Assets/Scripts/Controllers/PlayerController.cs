@@ -115,6 +115,7 @@ public class PlayerController : MonoBehaviour
             jumpForce += Time.deltaTime * jumpChargeRate;
             jumpForce = jumpForce > 1 ? 1 : jumpForce;
         }
+        RotateAgentTowardsDestination();
     }
     private void LateUpdate()
     {
@@ -351,5 +352,23 @@ public class PlayerController : MonoBehaviour
         _dashParticles.SetActive(false);
         _playerBodyModel.SetActive(true);
 
+    }
+
+
+    private void RotateAgentTowardsDestination()
+    {
+        levitation.position = new Vector3(levitation.position.x, levitation.position.y, body.transform.position.z);
+        // Calculate the rotation angle based on the X-axis as forward and invert it.
+        float angle = Mathf.Atan2(0, -lookDir) * Mathf.Rad2Deg;
+
+        // Add 180 degrees to the angle to make it opposite.
+        angle += 180f;
+        //Debug.Log("angle: " + angle);
+
+        // Create a Quaternion to represent the rotation.
+        Quaternion targetRotation = Quaternion.Euler(0f, angle, 0f);
+
+        // Apply the rotation to the agent smoothly using Slerp.
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5);
     }
 }

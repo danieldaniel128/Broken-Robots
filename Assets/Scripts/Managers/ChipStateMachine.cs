@@ -204,6 +204,7 @@ public class ChipStateMachine : MonoBehaviour
         ChipPatrolState chipPatrolState = AIStates.Find(c => c is ChipPatrolState) as ChipPatrolState;
         chipPatrolState.SetNewPatrolPoints(PatrolPoints);
         ChangeState(chipPatrolState);
+        GetComponent<EnemyStatus>().IsDead = true;
     }
     private void OnTriggerEnter(Collider other)
     {
