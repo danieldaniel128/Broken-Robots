@@ -23,6 +23,9 @@ public class PlayerController : MonoBehaviour
 
         public UnityEvent<float> onManaChange;
     }
+
+    [SerializeField] GameObject _dashParticles;
+    [SerializeField] GameObject _playerBodyModel;
     [SerializeField] Rigidbody body, levitation;
 
     [SerializeField] float levForce = 1, levMax = 2, levMin = .5f, movSpeed = 5, jumpImpulse = 1, jumpChargeRate = 1, dashSpeed = 1, dashRange = 1;
@@ -191,7 +194,7 @@ public class PlayerController : MonoBehaviour
         if (!dashAvailable) return;
         switch (ctx.phase)
         {
-            case InputActionPhase.Started: LockGravity(true); movementLock = true;  break;
+            case InputActionPhase.Started: LockGravity(true); movementLock = true; _dashParticles.SetActive(true); _playerBodyModel.SetActive(false) ; StartCoroutine(StopDash(1)); break;
             case InputActionPhase.Performed:
                 {
                     dashAvailable = false;
@@ -340,5 +343,13 @@ public class PlayerController : MonoBehaviour
         isLock ^= true; // invert boolean
         levitation.useGravity = body.useGravity = isLock;
         levitation.velocity = body.velocity = Vector3.zero;
+    }
+
+    public IEnumerator StopDash(float time)
+    {
+        yield return new WaitForSeconds(time);
+        _dashParticles.SetActive(false);
+        _playerBodyModel.SetActive(true);
+
     }
 }
