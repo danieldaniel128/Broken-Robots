@@ -6,6 +6,7 @@ public class BossRangeAttackState : BossAIState
 {
     public override void EnterState(BossStateMachine stateMachine)
     {
+        //stateMachine.Agent.SetDestination(stateMachine.TargetPlayer.position);
     }
 
     public override void ExitState(BossStateMachine stateMachine)
@@ -14,7 +15,8 @@ public class BossRangeAttackState : BossAIState
 
     public override void UpdateState(BossStateMachine stateMachine)
     {
-        stateMachine.Agent.SetDestination(stateMachine.TargetPlayer.position);
+        //stateMachine.Agent.SetDestination(stateMachine.TargetPlayer.position);
+        //Debug.Log("attacking player");
     }
 
 }

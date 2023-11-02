@@ -13,6 +13,15 @@ public class BossStateMachine : MonoBehaviour
 
     [SerializeField] GameObject _enemyChipPrefab;
     public BossAIState CurrentSummonPrefab { get; set; }
+    public LayerMask BossWallLayer;
+    [SerializeField] private float _distanceFromWall;
+    [SerializeField] float _rotationSpeed;
+
+    [SerializeField] private ProjectileSpawner _projectileSpawner;
+
+    [SerializeField] private float _attackCooldown;
+    private float _attackTimer;
+
 
     private void Start()
     {
@@ -27,6 +36,9 @@ public class BossStateMachine : MonoBehaviour
     {
         CurrentState.UpdateState(this);
         RotateAgentTowardsDestination();
+        MoveBossToCorners();
+        AttackPlayer();
+        ActivateAttackCooldown();
         //KeepsTheAgentOnZAxis();
     }
 
@@ -35,32 +47,77 @@ public class BossStateMachine : MonoBehaviour
         CurrentState.ExitState(this);
         CurrentState = newState;
         CurrentState.EnterState(this);
-        Debug.Log("CurrentState: " + CurrentState);
+        //Debug.Log("CurrentState: " + CurrentState);
     }
     private void RotateAgentTowardsDestination()
     {
-        Vector3 destination = Agent.destination;
-        Vector3 direction = (destination - transform.position).normalized;
-
         // Calculate the rotation angle based on the X-axis as forward and invert it.
-        float angle = Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg;
+        float angle = Mathf.Atan2(GetBossDirectionToPlayer().z, GetBossDirectionToPlayer().x) * Mathf.Rad2Deg;
+
+        // Add 180 degrees to the angle to make it opposite.
+        angle += 180f;
+        //Debug.Log("angle: " + angle);
 
         // Create a Quaternion to represent the rotation.
         Quaternion targetRotation = Quaternion.Euler(0f, angle, 0f);
 
-        // Apply the rotation to the agent.
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * Agent.angularSpeed);
+        // Apply the rotation to the agent smoothly using Slerp.
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * _rotationSpeed);
     }
 
     public void OnBossDeath()
     {
 
     }
+    private void MoveBossToCorners()
+    {
+            Ray ray = new Ray(transform.position, GetBossDirectionToPlayer()); // Create a ray from the mouse position
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, BossWallLayer))
+            {
+                float distance = hit.distance;
+                Agent.SetDestination(transform.position + GetBossDirectionToPlayer() * distance -GetBossDirectionToPlayer() * _distanceFromWall);
+            }
+    }
 
+    private Vector3 GetBossDirectionToPlayer()
+    {
+        float bossDirectionToPlayer = TargetPlayer.position.x - transform.position.x;
+        if (-bossDirectionToPlayer >= 0)
+            return Vector3.right;
+        else
+            return Vector3.left;
+    }
     //private void KeepsTheAgentOnZAxis()
     //{
     //    Vector3 newPosition = transform.position;
     //    newPosition.z = originalZPosition;
     //    transform.position = newPosition;
     //}
+
+
+
+    bool hasAttacked;
+    void AttackPlayer()
+    {
+        if (hasAttacked)
+            return;
+        ShootPlayer();
+        hasAttacked = true;
+    }
+    void ShootPlayer()
+    {
+        _projectileSpawner.SpawnProjectile(TargetPlayer.position - _projectileSpawner.transform.position);
+    }
+    void ActivateAttackCooldown()
+    {
+        if (!hasAttacked)
+            return;
+        if (_attackTimer < _attackCooldown)
+            _attackTimer += Time.deltaTime;
+        else
+        {
+            hasAttacked = false;
+            _attackTimer = 0;
+        }
+    }
 }
