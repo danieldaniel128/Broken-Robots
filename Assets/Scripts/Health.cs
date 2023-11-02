@@ -13,6 +13,8 @@ public class Health : MonoBehaviour
     public UnityEvent OnDeath;
     public UnityEvent<int> OnChangeValue;
 
+    public bool isMaxed => !(CurrentHealth < _maxHealth);
+
     // You can add events or delegate functions here to handle health changes, like onHealthChanged
 
     private void Start()
@@ -39,7 +41,7 @@ public class Health : MonoBehaviour
 
     public void Heal(int amount)
     {
-
+        CurrentHealth += CurrentHealth + amount < _maxHealth ? amount : _maxHealth - CurrentHealth;
     }
 
 }

@@ -1,30 +1,50 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 
 public class PlayerController : MonoBehaviour
 {
+    struct Mana
+    {
+        public float maxMana;
+        public float curMana{ 
+            get { return _curMana; }
+            set { _curMana = value; 
+                onManaChange?.Invoke(value);  } }
+        float _curMana;
+
+        public UnityEvent<float> onManaChange;
+    }
     [SerializeField] Rigidbody body, levitation;
 
     [SerializeField] float levForce = 1, levMax = 2, levMin = .5f, movSpeed = 5, jumpImpulse = 1, jumpChargeRate = 1, dashSpeed = 1, dashRange = 1;
-    float levMult = 1, speedMult = 1, jumpForce;
-    bool canJump, jumpLock, isGrounded, dashAvailable, movementLock;
+    float levMult = 1, speedMult = 1, jumpForce, manaDrain = 0;
+    bool canJump, jumpLock, dashAvailable, movementLock;
     bool rememberDash;
     const float jumpTimer = .5f;
     [SerializeField]TextMeshProUGUI stateGUI;
 
+    [Header("Resource"), SerializeField] int maxMana;
+    [SerializeField]float currentMana;
+    public UnityEvent<float> onManaChange;
 
     [Header("Purify"), SerializeField] float radius;
     [SerializeField] int pulseStartFrames, pulseActiveFrames, pulseRecoveryFrames;
     EnemyStatus target;
     Coroutine purify;
+    PlayerInput input;
 
+    [Header("Repair"), SerializeField] float duration;
+    [SerializeField]float drainAmount;
+    [SerializeField] int healAmount;
     enum PlayerState { 
         Normal,
         Jumping,
@@ -33,14 +53,34 @@ public class PlayerController : MonoBehaviour
 
     PlayerState state;
     Shock shock;
+    Health health;
+    Mana mana;
 
     float inputDir, lookDir = 1;
+
+    // InputBinding inputBinding = action.bindings[0];
+    // inputBinding.overridePath = path;
+    // action.ApplyBindingOverride(0, inputBinding);
+
 
     private void Awake()
     {
         shock = GetComponentInChildren<Shock>(true);
+        input = GetComponent<PlayerInput>();
+
+        InputAction repair = input.actions["Repair"];
+        InputBinding inputBind = repair.bindings[0];
+        inputBind.overrideInteractions = $"Hold(duration={duration})";
+        repair.ApplyBindingOverride(0,inputBind);
+        
         target = null;
+        health = GetComponent<Health>();
+        mana = new Mana { maxMana = maxMana, curMana = 0, onManaChange = new UnityEvent<float>() };
+        mana.onManaChange.AddListener(onManaChange.Invoke);
+        mana.onManaChange.AddListener(val => currentMana = val);
+        mana.curMana = maxMana;
     }
+
 
     void Start()
     {
@@ -59,7 +99,13 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-         transform.position += inputDir * movSpeed  * speedMult * Time.deltaTime * Vector3.right;
+        transform.position += inputDir * movSpeed  * speedMult * Time.deltaTime * Vector3.right;
+        if (manaDrain != 0 && mana.curMana > 0)
+        {
+            mana.curMana -= manaDrain * Time.deltaTime;
+            mana.curMana = mana.curMana > 0 ? mana.curMana : 0;
+        }
+
 
         if (jumpLock)
         {
@@ -83,11 +129,9 @@ public class PlayerController : MonoBehaviour
 
         if ( ! Physics.Raycast(down, out RaycastHit hit, levMax))
         {
-            isGrounded = false;
             return 0;
         } else
         {
-            isGrounded = true;
             if (!movementLock)
             {
                 dashAvailable = true;
@@ -236,7 +280,32 @@ public class PlayerController : MonoBehaviour
         yield return null;
     }
 
-    public void Repair(InputAction.CallbackContext ctx) { }
+    public void Repair(InputAction.CallbackContext ctx) {
+        Debug.Log(health.isMaxed);
+        void handle(InputAction.CallbackContext ctx) => ChangeDrain(-drainAmount);
+        switch (ctx.phase)
+        {
+            case InputActionPhase.Waiting: ctx.action.canceled -= handle; break;
+            case InputActionPhase.Started: if (mana.curMana == 0 || health.isMaxed) return; ActionLock(true); ChangeDrain(drainAmount); ctx.action.canceled += handle ; break;
+            case InputActionPhase.Performed:
+                {
+                    if (health.isMaxed) return;
+                    if (mana.curMana > 0)
+                        health.Heal(healAmount);
+                    handle(ctx);
+                    ctx.action.canceled -= handle;
+                    ActionLock(false);
+                    break;
+                }
+            case InputActionPhase.Canceled: ActionLock(false); break;
+        }
+
+    }
+
+    void ChangeDrain(float amount)
+    {
+        manaDrain += amount;
+    }
 
     public IEnumerator StartTimer(float time, UnityAction action = null)
     {

@@ -131,7 +131,7 @@
                     "name": "",
                     "id": "f4a158f0-cf8d-427d-bf6f-ee670edc6ee6",
                     "path": "<Keyboard>/d",
-                    "interactions": "",
+                    "interactions": "Hold(duration=0.4)",
                     "processors": "",
                     "groups": "",
                     "action": "Repair",

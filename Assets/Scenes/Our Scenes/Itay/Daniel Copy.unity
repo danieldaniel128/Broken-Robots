@@ -5775,6 +5775,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2059140270}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1869646488 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1112845007, guid: 55db61c41d2463b4bb71f25fee9f6d7f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2059140270}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cde111c32f454f4eb5bd11064471f91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1873952107
 GameObject:
   m_ObjectHideFlags: 0
@@ -6078,6 +6090,14 @@ PrefabInstance:
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 1112845007, guid: 55db61c41d2463b4bb71f25fee9f6d7f, type: 3}
+      propertyPath: maxMana
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1112845007, guid: 55db61c41d2463b4bb71f25fee9f6d7f, type: 3}
+      propertyPath: duration
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1112845007, guid: 55db61c41d2463b4bb71f25fee9f6d7f, type: 3}
       propertyPath: paFrames
       value: 20
       objectReference: {fileID: 0}
@@ -6089,9 +6109,57 @@ PrefabInstance:
       propertyPath: psFrames
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 1112845007, guid: 55db61c41d2463b4bb71f25fee9f6d7f, type: 3}
+      propertyPath: healAmount
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1112845007, guid: 55db61c41d2463b4bb71f25fee9f6d7f, type: 3}
+      propertyPath: currentMana
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1112845007, guid: 55db61c41d2463b4bb71f25fee9f6d7f, type: 3}
+      propertyPath: drainAmount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1112845007, guid: 55db61c41d2463b4bb71f25fee9f6d7f, type: 3}
+      propertyPath: onManaChange.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1112845007, guid: 55db61c41d2463b4bb71f25fee9f6d7f, type: 3}
+      propertyPath: onManaChange.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1112845007, guid: 55db61c41d2463b4bb71f25fee9f6d7f, type: 3}
+      propertyPath: onManaChange.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1869646488}
+    - target: {fileID: 1112845007, guid: 55db61c41d2463b4bb71f25fee9f6d7f, type: 3}
+      propertyPath: onManaChange.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1112845007, guid: 55db61c41d2463b4bb71f25fee9f6d7f, type: 3}
+      propertyPath: onManaChange.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: set_currentMana
+      objectReference: {fileID: 0}
+    - target: {fileID: 1112845007, guid: 55db61c41d2463b4bb71f25fee9f6d7f, type: 3}
+      propertyPath: onManaChange.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1112845007, guid: 55db61c41d2463b4bb71f25fee9f6d7f, type: 3}
+      propertyPath: onManaChange.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1715388950, guid: 55db61c41d2463b4bb71f25fee9f6d7f, type: 3}
       propertyPath: m_Constraints
       value: 122
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066609137, guid: 55db61c41d2463b4bb71f25fee9f6d7f, type: 3}
+      propertyPath: _currentHealth
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066609137, guid: 55db61c41d2463b4bb71f25fee9f6d7f, type: 3}
+      propertyPath: OnChangeValue.m_PersistentCalls.m_Calls.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 226685740030808670, guid: 55db61c41d2463b4bb71f25fee9f6d7f,
         type: 3}
