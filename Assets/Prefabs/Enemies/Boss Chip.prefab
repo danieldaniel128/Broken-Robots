@@ -212,7 +212,7 @@ MonoBehaviour:
   TargetPlayer: {fileID: 0}
   _bossWallLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   _distanceFromWall: 3
   _rotationSpeed: 5
   _enemyBasicChipPrefab: {fileID: 4435055155585234222, guid: 142f005f041247f4aba03da033431397,
@@ -221,9 +221,9 @@ MonoBehaviour:
     type: 3}
   _spawnSummonPositionLeftWall: {fileID: 0}
   _spawnSummonPositionRightWall: {fileID: 0}
-  _summonAttackCooldown: 0
+  _summonAttackCooldown: 4
   _projectileSpawner: {fileID: 1761877747}
-  _lazerAttackCooldown: 0
+  _lazerAttackCooldown: 3
 --- !u!114 &1344824276
 MonoBehaviour:
   m_ObjectHideFlags: 0

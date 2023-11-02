@@ -42,7 +42,8 @@ public class ChipStateMachine : MonoBehaviour
     private float originalZPosition;
 
     public bool IsDead = false;
-    [SerializeField] Collider _chipCollider;
+    public Collider ChipCollider;
+    public Collider ChipTrigger;
 
     private void Start()
     {
@@ -171,6 +172,8 @@ public class ChipStateMachine : MonoBehaviour
 
     private void RotateAgentTowardsDestination()
     {
+        if (!Agent.enabled)
+            return;
         Vector3 destination = Agent.destination;
         Vector3 direction = (destination - transform.position).normalized;
 
@@ -195,7 +198,8 @@ public class ChipStateMachine : MonoBehaviour
         Debug.Log("chip is dead");
         IsDead = true;
         IsUsingSpecificPatrolPoints = true;
-        _chipCollider.isTrigger = true;
+        ChipCollider.enabled = false;
+        GetComponent<Collider>().enabled = false;
         SetPatrolPoints();
         ChipPatrolState chipPatrolState = AIStates.Find(c => c is ChipPatrolState) as ChipPatrolState;
         chipPatrolState.SetNewPatrolPoints(PatrolPoints);

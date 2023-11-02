@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 170734532}
   - component: {fileID: 170734535}
   - component: {fileID: 170734534}
-  - component: {fileID: 170734533}
   m_Layer: 0
   m_Name: Right Eye
   m_TagString: Untagged
@@ -84,19 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &170734533
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 170734531}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &426378766
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,7 +127,6 @@ GameObject:
   - component: {fileID: 1351219151}
   - component: {fileID: 1351219154}
   - component: {fileID: 1351219153}
-  - component: {fileID: 1351219152}
   m_Layer: 0
   m_Name: Left Eye
   m_TagString: Untagged
@@ -214,19 +199,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &1351219152
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1351219150}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4060531752005794303
 GameObject:
   m_ObjectHideFlags: 0
@@ -473,12 +445,13 @@ MonoBehaviour:
   TargetLayer:
     serializedVersion: 2
     m_Bits: 8
-  _minSpeed: 3
-  _maxSpeed: 3
+  _minSpeed: 6
+  _maxSpeed: 8
   _acceleration: 3
   AttackRadius: 1
   IsDead: 0
-  _chipCollider: {fileID: 1922912554690399444}
+  ChipCollider: {fileID: 1922912554690399444}
+  ChipTrigger: {fileID: 3534905265200508826}
 --- !u!114 &332967191
 MonoBehaviour:
   m_ObjectHideFlags: 0
