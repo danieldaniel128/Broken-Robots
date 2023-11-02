@@ -14,7 +14,7 @@ public class Shock : MonoBehaviour
     [Header("FrameData"), SerializeField] int startFrames;
     [SerializeField] int activeFrames, recoveryFrames;
     Collider c;
-    Renderer r;
+    GameObject particlesShock;
     List<EnemyStatus> hits;
 
     public bool isAvailable => timer <= 0;
@@ -24,7 +24,7 @@ public class Shock : MonoBehaviour
         timer = 0;
         hits = new List<EnemyStatus>();
         c = GetComponent<BoxCollider>();
-        r = GetComponent<MeshRenderer>();
+        particlesShock = transform.GetChild(0).gameObject;
     }
 
     public float Range => range;
@@ -34,11 +34,12 @@ public class Shock : MonoBehaviour
         yield return StartCoroutine(player.WaitFrames(startFrames));
         //turn all on
         c.enabled = true;
-        r.enabled = true;
+        particlesShock.gameObject.SetActive(true);
+        particlesShock.GetComponent<ParticleSystem>().Play();
         yield return StartCoroutine(player.WaitFrames(activeFrames));
         // turn all off
         c.enabled = false;
-        r.enabled = false;
+        particlesShock.gameObject.SetActive(false);
         hits.Clear();
         yield return StartCoroutine(player.WaitFrames(recoveryFrames));
 

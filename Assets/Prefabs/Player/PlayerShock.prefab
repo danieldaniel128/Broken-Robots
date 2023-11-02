@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 233297136682890865}
   - component: {fileID: 6561036855681237311}
   - component: {fileID: 7054889441419571906}
-  - component: {fileID: 5897260664157255523}
   m_Layer: 0
   m_Name: PlayerShock
   m_TagString: Untagged
@@ -31,7 +30,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1557774112384205725}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -109,11 +109,83 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &5897260664157255523
-MeshFilter:
+--- !u!1001 &2981336314653093661
+PrefabInstance:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 7093501307953799533}
+    m_Modifications:
+    - target: {fileID: 4377928576497577088, guid: 94ce00fa0a5f33745add61e1f40b82f4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4377928576497577088, guid: 94ce00fa0a5f33745add61e1f40b82f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4377928576497577088, guid: 94ce00fa0a5f33745add61e1f40b82f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4377928576497577088, guid: 94ce00fa0a5f33745add61e1f40b82f4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4377928576497577088, guid: 94ce00fa0a5f33745add61e1f40b82f4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4377928576497577088, guid: 94ce00fa0a5f33745add61e1f40b82f4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4377928576497577088, guid: 94ce00fa0a5f33745add61e1f40b82f4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4377928576497577088, guid: 94ce00fa0a5f33745add61e1f40b82f4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4377928576497577088, guid: 94ce00fa0a5f33745add61e1f40b82f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4377928576497577088, guid: 94ce00fa0a5f33745add61e1f40b82f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4377928576497577088, guid: 94ce00fa0a5f33745add61e1f40b82f4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4377928576497577093, guid: 94ce00fa0a5f33745add61e1f40b82f4,
+        type: 3}
+      propertyPath: m_Name
+      value: Shock Effect
+      objectReference: {fileID: 0}
+    - target: {fileID: 4377928576497577093, guid: 94ce00fa0a5f33745add61e1f40b82f4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 94ce00fa0a5f33745add61e1f40b82f4, type: 3}
+--- !u!4 &1557774112384205725 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4377928576497577088, guid: 94ce00fa0a5f33745add61e1f40b82f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 2981336314653093661}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7233140446384465350}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}

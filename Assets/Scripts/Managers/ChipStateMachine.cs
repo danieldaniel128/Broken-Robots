@@ -205,5 +205,9 @@ public class ChipStateMachine : MonoBehaviour
         chipPatrolState.SetNewPatrolPoints(PatrolPoints);
         ChangeState(chipPatrolState);
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        
+    }
 
 }
