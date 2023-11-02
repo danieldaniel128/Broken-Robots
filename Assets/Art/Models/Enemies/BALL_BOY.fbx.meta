@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: BASE_METAL
-    second: {fileID: 2100000, guid: 966b80d369ef17e4c8d4354911aff8df, type: 2}
+    second: {fileID: 2100000, guid: 86d076208bcbb7b41ae802ca3d627464, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -18,7 +18,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: DARKER_METAL
-    second: {fileID: 2100000, guid: 86d076208bcbb7b41ae802ca3d627464, type: 2}
+    second: {fileID: 2100000, guid: 966b80d369ef17e4c8d4354911aff8df, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
