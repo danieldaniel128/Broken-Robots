@@ -78,8 +78,8 @@ public class BossStateMachine : MonoBehaviour
             }
 
             //summon attack
-            SummonAttackPlayer();
-            ActivateSummonAttackCooldown();
+            //SummonAttackPlayer();
+            //ActivateSummonAttackCooldown();
 
         }
         ActivatePurifyCooldown();
@@ -269,13 +269,10 @@ public class BossStateMachine : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if(_isRollingAttackOn)
-        if (other.TryGetComponent<PlayerController>(out PlayerController player) && !player)
+        if (other.GetComponent<PlayerController>() != null)
         {
-            if (player.TryGetComponent<Health>(out Health enemyHealth))
-            {
-                enemyHealth.TakeDamage(_rollingDamage);
+                    other.GetComponent<Health>().TakeDamage(_rollingDamage);
                     Debug.Log("boss hit player rolling");
-            }
         }
     }
 

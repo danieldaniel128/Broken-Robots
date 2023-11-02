@@ -203,9 +203,12 @@ public class ChipStateMachine : MonoBehaviour
         ChangeState(chipPatrolState);
         GetComponent<EnemyStatus>().IsDead = true;
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        
+        if (collision.transform.CompareTag("Player"))
+        {
+            collision.gameObject.GetComponentInParent<Health>().TakeDamage(1);
+        }
     }
 
 }

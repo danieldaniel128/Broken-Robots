@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     }
 
     [SerializeField] GameObject _dashParticles;
+    [SerializeField] GameObject _purifyParticles;
     [SerializeField] GameObject _playerBodyModel;
     [SerializeField] Rigidbody body, levitation;
 
@@ -242,12 +243,14 @@ public class PlayerController : MonoBehaviour
     {
         switch (ctx.phase)
         {
-            case InputActionPhase.Started:
+            case InputActionPhase.Started:// case InputActionPhase.Started: LockGravity(true); movementLock = true; _dashParticles.SetActive(true); _playerBodyModel.SetActive(false) ; StartCoroutine(StopDash(1)); break;
                 {
                     Debug.Log("Looking for Purify Target");
                     target = Physics.OverlapSphere(body.position, radius)
                          .OrderBy(c => Vector3.Distance(body.position, c.transform.position))
                          .FirstOrDefault(c => c.TryGetComponent<EnemyStatus>(out EnemyStatus enemy) && enemy.IsDead && !enemy.IsPurify)?.GetComponent<EnemyStatus>();
+                    _purifyParticles.SetActive(true);
+                    StartCoroutine(StopPurify(1.5f));
                     break;
                 }
             case InputActionPhase.Performed:
@@ -256,15 +259,16 @@ public class PlayerController : MonoBehaviour
                     {
                         Debug.Log($"Purifying {target.gameObject.name}");
                         ActionLock(true);
-                        purify = StartCoroutine(PurifyRoutine(target));
                     }
                     break;
                 }
             default: 
                 {
                     if (purify is not null) 
-                    { 
-                        StopCoroutine(purify); 
+                    {
+                        
+                        StopCoroutine(purify);
+                        _purifyParticles.SetActive(false);
                         purify = null;
                         ActionLock(false);
                         Debug.Log($"Purifying status - {target.IsPurify}");
@@ -351,7 +355,11 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(time);
         _dashParticles.SetActive(false);
         _playerBodyModel.SetActive(true);
-
+    }
+    public IEnumerator StopPurify(float time)
+    {
+        yield return new WaitForSeconds(time);
+        _purifyParticles.SetActive(false);
     }
 
 
