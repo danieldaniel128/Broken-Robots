@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Unity.Burst.Intrinsics;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class BossStateMachine : MonoBehaviour
 {
@@ -51,6 +50,10 @@ public class BossStateMachine : MonoBehaviour
 
 
     [SerializeField] List<GameObject> _summonsList;
+    [SerializeField] float PurifyCooldown;
+
+    [SerializeField] GameObject bossBody;
+    float PurifyTimer;
 
     private void Start()
     {
@@ -79,6 +82,7 @@ public class BossStateMachine : MonoBehaviour
             ActivateSummonAttackCooldown();
 
         }
+        ActivatePurifyCooldown();
         GetBossTo0ZAxis();
         //KeepsTheAgentOnZAxis();
     }
@@ -96,12 +100,13 @@ public class BossStateMachine : MonoBehaviour
         Quaternion targetRotation = Quaternion.Euler(0f, angle, 0f);
 
         // Apply the rotation to the agent smoothly using Slerp.
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * _rotationSpeed);
+        bossBody.transform.rotation = Quaternion.Slerp(bossBody.transform.rotation, targetRotation, Time.deltaTime * _rotationSpeed);
     }
 
     public void OnBossDeath()
     {
         stopMove = true;
+        GetComponent<EnemyStatus>().IsDead = true;
         Agent.SetDestination(startPos);
     }
     private void MoveBossToCorners()
@@ -234,7 +239,23 @@ public class BossStateMachine : MonoBehaviour
             _summonAttackTimer = 0;
         }
     }
-
+    void ActivatePurifyCooldown()
+    {
+        if (!stopMove)
+            return;
+        if (PurifyTimer < PurifyCooldown)
+            PurifyTimer += Time.deltaTime;
+        else
+        {
+            if(!GetComponent<EnemyStatus>().IsPurify)
+            {
+                GetComponent<EnemyStatus>().IsDead = false;
+                stopMove = false;
+                GetComponent<Health>().CurrentHealth = 3;
+            }
+            PurifyTimer = 0;
+        }
+    }
     void AttackRollingPlayer(float wallDistance)
     {
         if (_isRollingAttackOn)

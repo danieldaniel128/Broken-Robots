@@ -25,12 +25,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1761877745}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.519, y: 0.427, z: 0}
-  m_LocalScale: {x: 0.84499997, y: 0.84499997, z: 0.84499997}
+  m_LocalPosition: {x: 0.513, y: 0.018093223, z: 0}
+  m_LocalScale: {x: 0.035805084, y: 0.035805084, z: 0.035805084}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8545554640883441696}
-  m_RootOrder: 1
+  m_Father: {fileID: 6665712126852380631}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1761877747
 MonoBehaviour:
@@ -127,7 +127,6 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8970653626422866039}
-  - {fileID: 1761877746}
   - {fileID: 6665712126852380631}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -184,7 +183,7 @@ MonoBehaviour:
   _bossWallLayer:
     serializedVersion: 2
     m_Bits: 256
-  _distanceFromWall: 3
+  _distanceFromWall: 4
   _moveSpeed: 3
   _rotationSpeed: 5
   _enemyBasicChipPrefab: {fileID: 4435055155585234222, guid: 142f005f041247f4aba03da033431397,
@@ -193,13 +192,15 @@ MonoBehaviour:
     type: 3}
   _spawnSummonPositionLeftWall: {fileID: 0}
   _spawnSummonPositionRightWall: {fileID: 0}
-  _summonAttackCooldown: 4
+  _summonAttackCooldown: 9
   _projectileSpawner: {fileID: 1761877747}
-  _lazerAttackCooldown: 3
+  _lazerAttackCooldown: 4
   _corneredBossDistance: 6.5
   _rollingSpeed: 6
   _rollingDamage: 1
   _summonsList: []
+  PurifyCooldown: 5
+  bossBody: {fileID: 6326024140696120685}
 --- !u!114 &1344824276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,11 +229,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5031a79cc3887c94fadf5a277a158578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 9
-  _currentHealth: 9
+  _maxHealth: 1
+  _currentHealth: 1
   OnDeath:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 35511641}
+        m_TargetAssemblyTypeName: BossStateMachine, Assembly-CSharp
+        m_MethodName: OnBossDeath
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnChangeValue:
     m_PersistentCalls:
       m_Calls:
@@ -263,7 +276,7 @@ PrefabInstance:
     - target: {fileID: 8048444076002281392, guid: 373f217579832534db73727de62fd0c1,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8048444076002281392, guid: 373f217579832534db73727de62fd0c1,
         type: 3}
@@ -283,7 +296,7 @@ PrefabInstance:
     - target: {fileID: 8048444076002281392, guid: 373f217579832534db73727de62fd0c1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.024
       objectReference: {fileID: 0}
     - target: {fileID: 8048444076002281392, guid: 373f217579832534db73727de62fd0c1,
         type: 3}
@@ -332,6 +345,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 373f217579832534db73727de62fd0c1, type: 3}
+--- !u!1 &6326024140696120685 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7276129875520838922, guid: 373f217579832534db73727de62fd0c1,
+    type: 3}
+  m_PrefabInstance: {fileID: 3688602998327095399}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6665712126852380631 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8048444076002281392, guid: 373f217579832534db73727de62fd0c1,

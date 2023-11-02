@@ -357,7 +357,8 @@ public class PlayerController : MonoBehaviour
 
     private void RotateAgentTowardsDestination()
     {
-        levitation.position = new Vector3(levitation.position.x, levitation.position.y, body.transform.position.z);
+        levitation.position = new Vector3(levitation.position.x, levitation.position.y, 0);
+        body.position = new Vector3(body.position.x, body.position.y, 0);
         // Calculate the rotation angle based on the X-axis as forward and invert it.
         float angle = Mathf.Atan2(0, -lookDir) * Mathf.Rad2Deg;
 
@@ -369,6 +370,6 @@ public class PlayerController : MonoBehaviour
         Quaternion targetRotation = Quaternion.Euler(0f, angle, 0f);
 
         // Apply the rotation to the agent smoothly using Slerp.
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5);
+        body.rotation = Quaternion.Slerp(body.rotation, targetRotation, Time.deltaTime * 5);
     }
 }
