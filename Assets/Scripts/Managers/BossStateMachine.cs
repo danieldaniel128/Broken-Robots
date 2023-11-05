@@ -12,8 +12,9 @@ public class BossStateMachine : MonoBehaviour
     public List<BossAIState> AIStates { get; private set; }
     public BossAIState CurrentState { get; private set; }
     bool stopMove = false;
-
     Vector3 startPos;
+
+    [SerializeField] Animator _bossAnimator;
 
 
     [Header("Boss Movement")]
@@ -56,16 +57,19 @@ public class BossStateMachine : MonoBehaviour
     [SerializeField] GameObject bossBody;
     float PurifyTimer;
 
+    float _currentSpeed;
+
     private void Start()
     {
         startPos = transform.position;
+        _currentSpeed = _moveSpeed;
     }
     private void Update()
     {
         //CurrentState.UpdateState(this);
 
         //movement
-        RotateAgentTowardsDestination();
+        Agent.speed = _currentSpeed;
         if (!stopMove)
         {
 
@@ -86,6 +90,7 @@ public class BossStateMachine : MonoBehaviour
 
         }
         ActivatePurifyCooldown();
+        RotateAgentTowardsDestination();
         GetBossTo0ZAxis();
     }
 
@@ -257,8 +262,9 @@ public class BossStateMachine : MonoBehaviour
             if (Agent.remainingDistance <= 0.2f)//got to other corner after rolling
             {
                 _isRollingAttackOn = false;
-                Agent.speed = _moveSpeed;
+                _currentSpeed = _moveSpeed;
                 Debug.Log("finished rolling");
+                _bossAnimator.SetBool("IsRolling", _isRollingAttackOn);
                 ActivateSummons();
             }
     }
@@ -266,11 +272,11 @@ public class BossStateMachine : MonoBehaviour
     {
         if (_isRollingAttackOn)
             return;
-        Debug.Log("rolling");
+        Debug.Log("start rolling");
         Agent.SetDestination(transform.position - GetBossDirectionToPlayer() * wallDistance + GetBossDirectionToPlayer() * _distanceFromWall);
         _isRollingAttackOn = true;
-        Agent.speed = _rollingSpeed;
-        
+        _currentSpeed = _rollingSpeed;
+        _bossAnimator.SetBool("IsRolling", _isRollingAttackOn);
     }
     #endregion
 
