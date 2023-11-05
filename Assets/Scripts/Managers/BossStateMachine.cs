@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Burst.Intrinsics;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class BossStateMachine : MonoBehaviour
 {
@@ -69,6 +70,8 @@ public class BossStateMachine : MonoBehaviour
         {
 
             MoveBossToCorners();
+            RollingAttackPlayer();
+            StopRollingAttack();
 
             //lazer attack
             if (!_isRollingAttackOn)
@@ -84,7 +87,6 @@ public class BossStateMachine : MonoBehaviour
         }
         ActivatePurifyCooldown();
         GetBossTo0ZAxis();
-        //KeepsTheAgentOnZAxis();
     }
 
     private void RotateAgentTowardsDestination()
@@ -120,63 +122,11 @@ public class BossStateMachine : MonoBehaviour
             Agent.SetDestination(transform.position + GetBossDirectionToPlayer() * distance -GetBossDirectionToPlayer() * _distanceFromWall);
             
         }
-        if (Agent.remainingDistance <= 0.2f)//checks if aproximetly arrived to destination, in other words, a corner.
-            if (!_isRollingAttackOn)//if in not in mid rolling
-                if (Vector3.Distance(transform.position, TargetPlayer.position) <= _corneredBossDistance)//checks if got to a corner and in the player got close to boss.
-                {
-                    ray = new Ray(transform.position, -GetBossDirectionToPlayer()); //
-                    if (Physics.Raycast(ray, out RaycastHit hit2, Mathf.Infinity, _bossWallLayer))
-                    {
-                        distance = hit2.distance;
-                        Debug.Log("time to roll");
-                        AttackRollingPlayer(distance);
-                    }
-                }
-                else { }
-            else //if in mid rolling
-            {
-                if (Agent.remainingDistance <= 0.2f)//got to other corner after rolling
-                { 
-                    _isRollingAttackOn = false;
-                    Agent.speed = _moveSpeed;
-                    Debug.Log("finished rolling");
-                    foreach (GameObject summon in _summonsList)
-                    {
-                        ChipStateMachine chipStateMachine = summon.GetComponent<ChipStateMachine>();
-                        chipStateMachine.enabled = true;
-                        chipStateMachine.ChipCollider.enabled = true;
-                        chipStateMachine.ChipTrigger.enabled = true;
-                        chipStateMachine.Agent.enabled = true;
-                    }
-                }
-               
-            }
-
-        if (_isRollingAttackOn)
-        {
-            Debug.Log("mid rolling");
-            foreach (GameObject summon in _summonsList)
-            {
-                ChipStateMachine chipStateMachine = summon.GetComponent<ChipStateMachine>();
-                chipStateMachine.ChipCollider.enabled = false;
-                chipStateMachine.ChipTrigger.enabled = false;
-                chipStateMachine.Agent.enabled = false;
-                chipStateMachine.enabled = false;
-            }
-        }
-
+     
     }
 
-    private Vector3 GetBossDirectionToPlayer()
-    {
-        float bossDirectionToPlayer = TargetPlayer.position.x - transform.position.x;
-        if (-bossDirectionToPlayer >= 0)
-            return Vector3.right;
-        else
-            return Vector3.left;
-    }
-    
 
+    #region LazerAttack
     void LaserAttackPlayer()
     {
         if (_hasLaserAttacked)
@@ -184,21 +134,33 @@ public class BossStateMachine : MonoBehaviour
         ShootPlayer();
         _hasLaserAttacked = true;
     }
+    void ShootPlayer()
+    {
+        _projectileSpawner.SpawnProjectile(TargetPlayer.position - _projectileSpawner.transform.position);
+    }
+    void ActivateLaserAttackCooldown()
+    {
+        if (!_hasLaserAttacked)
+            return;
+        if (_laserAttackTimer < _lazerAttackCooldown)
+            _laserAttackTimer += Time.deltaTime;
+        else
+        {
+            _hasLaserAttacked = false;
+            _laserAttackTimer = 0;
+        }
+    }
+    #endregion
 
+    #region SummonAttack
     void SummonAttackPlayer()
     {
         if (_hasSummonAttacked)
             return;
         SummonEnemies();
+        DisactivateSummons();
         _hasSummonAttacked = true;
     }
-
-
-    void ShootPlayer()
-    {
-        _projectileSpawner.SpawnProjectile(TargetPlayer.position - _projectileSpawner.transform.position);
-    }
-
     void SummonEnemies()
     {
         if (GetBossDirectionToPlayer().Equals(Vector3.left))
@@ -215,18 +177,6 @@ public class BossStateMachine : MonoBehaviour
         }
         _summonsList.Add(Instantiate(_currentSummonPrefab, _currentSummonSpawnPos.position, Quaternion.identity, _currentSummonSpawnPos));
     }
-    void ActivateLaserAttackCooldown()
-    {
-        if (!_hasLaserAttacked)
-            return;
-        if (_laserAttackTimer < _lazerAttackCooldown)
-            _laserAttackTimer += Time.deltaTime;
-        else
-        {
-            _hasLaserAttacked = false;
-            _laserAttackTimer = 0;
-        }
-    }
     void ActivateSummonAttackCooldown()
     {
         if (!_hasSummonAttacked)
@@ -239,6 +189,32 @@ public class BossStateMachine : MonoBehaviour
             _summonAttackTimer = 0;
         }
     }
+    void DisactivateSummons()
+    {
+        if(_isRollingAttackOn)
+        foreach (GameObject summon in _summonsList)
+        {
+            ChipStateMachine chipStateMachine = summon.GetComponent<ChipStateMachine>();
+            chipStateMachine.ChipCollider.enabled = false;
+            chipStateMachine.ChipTrigger.enabled = false;
+            chipStateMachine.Agent.enabled = false;
+            chipStateMachine.enabled = false;
+        }
+    }
+
+    void ActivateSummons()
+    {
+        foreach (GameObject summon in _summonsList)
+        {
+            ChipStateMachine chipStateMachine = summon.GetComponent<ChipStateMachine>();
+            chipStateMachine.Agent.enabled = true;
+            chipStateMachine.enabled = true;
+            chipStateMachine.ChipCollider.enabled = true;
+            chipStateMachine.ChipTrigger.enabled = true;
+        }
+    }
+    #endregion
+
     void ActivatePurifyCooldown()
     {
         if (!stopMove)
@@ -256,7 +232,37 @@ public class BossStateMachine : MonoBehaviour
             PurifyTimer = 0;
         }
     }
-    void AttackRollingPlayer(float wallDistance)
+
+    #region Rolling Attack
+
+    void RollingAttackPlayer()
+    {
+        if (!_isRollingAttackOn)//if in not in mid rolling
+            if (Agent.remainingDistance <= 0.2f)
+                if (Vector3.Distance(transform.position, TargetPlayer.position) <= _corneredBossDistance)//checks if got to a corner and in the player got close to boss.
+                {
+                    Ray ray = new Ray(transform.position, -GetBossDirectionToPlayer()); //
+                    if (Physics.Raycast(ray, out RaycastHit hit2, Mathf.Infinity, _bossWallLayer))
+                    {
+                        float distance = hit2.distance;
+                        Debug.Log("time to roll");
+                        RollingPlayer(distance);
+                        DisactivateSummons();
+                    }
+                }
+    }
+    void StopRollingAttack()
+    {
+        if (_isRollingAttackOn)
+            if (Agent.remainingDistance <= 0.2f)//got to other corner after rolling
+            {
+                _isRollingAttackOn = false;
+                Agent.speed = _moveSpeed;
+                Debug.Log("finished rolling");
+                ActivateSummons();
+            }
+    }
+    void RollingPlayer(float wallDistance)
     {
         if (_isRollingAttackOn)
             return;
@@ -266,6 +272,22 @@ public class BossStateMachine : MonoBehaviour
         Agent.speed = _rollingSpeed;
         
     }
+    #endregion
+
+    #region Utility
+    void GetBossTo0ZAxis()
+    {
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+    }
+    private Vector3 GetBossDirectionToPlayer()
+    {
+        float bossDirectionToPlayer = TargetPlayer.position.x - transform.position.x;
+        if (-bossDirectionToPlayer >= 0)
+            return Vector3.right;
+        else
+            return Vector3.left;
+    }
+    #endregion
     private void OnTriggerEnter(Collider other)
     {
         if(_isRollingAttackOn)
@@ -276,8 +298,8 @@ public class BossStateMachine : MonoBehaviour
         }
     }
 
-    void GetBossTo0ZAxis()
+    private void OnDrawGizmos()
     {
-        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+        Gizmos.DrawSphere(Agent.destination, 1);
     }
 }
