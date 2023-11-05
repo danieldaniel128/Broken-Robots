@@ -8,6 +8,7 @@ TagManager:
   - Platform
   - SceneGate
   - Checkpoint
+  - RollingHitBoxPlayer
   layers:
   - Default
   - TransparentFX

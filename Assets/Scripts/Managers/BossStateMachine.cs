@@ -15,6 +15,8 @@ public class BossStateMachine : MonoBehaviour
     Vector3 startPos;
 
     [SerializeField] Animator _bossAnimator;
+    [SerializeField] GameObject _bossBody;
+    [SerializeField] GameObject _playerRollingHitCollider;
 
 
     [Header("Boss Movement")]
@@ -50,11 +52,10 @@ public class BossStateMachine : MonoBehaviour
     [SerializeField] int _rollingDamage;
     bool _isRollingAttackOn = false;
 
-
-    [SerializeField] List<GameObject> _summonsList;
+    [Header("Purify Attack")]
     [SerializeField] float PurifyCooldown;
 
-    [SerializeField] GameObject bossBody;
+    List<GameObject> _summonsList;
     float PurifyTimer;
 
     float _currentSpeed;
@@ -107,13 +108,13 @@ public class BossStateMachine : MonoBehaviour
         Quaternion targetRotation = Quaternion.Euler(0f, angle, 0f);
 
         // Apply the rotation to the agent smoothly using Slerp.
-        bossBody.transform.rotation = Quaternion.Slerp(bossBody.transform.rotation, targetRotation, Time.deltaTime * _rotationSpeed);
+        _bossBody.transform.rotation = Quaternion.Slerp(_bossBody.transform.rotation, targetRotation, Time.deltaTime * _rotationSpeed);
     }
 
     public void OnBossDeath()
     {
         stopMove = true;
-        GetComponent<EnemyStatus>().IsDead = true;
+        GetComponentInChildren<EnemyStatus>().IsDead = true;
         Agent.SetDestination(startPos);
     }
     private void MoveBossToCorners()
@@ -196,6 +197,8 @@ public class BossStateMachine : MonoBehaviour
     }
     void DisactivateSummons()
     {
+        if (_summonsList == null)
+            return;
         if(_isRollingAttackOn)
         foreach (GameObject summon in _summonsList)
         {
@@ -209,6 +212,8 @@ public class BossStateMachine : MonoBehaviour
 
     void ActivateSummons()
     {
+        if (_summonsList == null)
+            return;
         foreach (GameObject summon in _summonsList)
         {
             ChipStateMachine chipStateMachine = summon.GetComponent<ChipStateMachine>();
@@ -276,6 +281,7 @@ public class BossStateMachine : MonoBehaviour
         Agent.SetDestination(transform.position - GetBossDirectionToPlayer() * wallDistance + GetBossDirectionToPlayer() * _distanceFromWall);
         _isRollingAttackOn = true;
         _currentSpeed = _rollingSpeed;
+        _playerRollingHitCollider.SetActive(true);
         _bossAnimator.SetBool("IsRolling", _isRollingAttackOn);
     }
     #endregion
@@ -296,14 +302,14 @@ public class BossStateMachine : MonoBehaviour
     #endregion
     private void OnTriggerEnter(Collider other)
     {
-        if(_isRollingAttackOn)
-        if (other.GetComponent<PlayerController>() != null)
+        if(_isRollingAttackOn && other.tag.Equals("RollingHitBoxPlayer"))
+        if (other.GetComponentInParent<PlayerController>() != null)
         {
-                    other.GetComponent<Health>().TakeDamage(_rollingDamage);
-                    Debug.Log("boss hit player rolling");
+            other.GetComponentInParent<Health>().TakeDamage(_rollingDamage);
+            _playerRollingHitCollider.SetActive(false);
+            Debug.Log("boss hit player rolling");
         }
     }
-
     private void OnDrawGizmos()
     {
         Gizmos.DrawSphere(Agent.destination, 1);

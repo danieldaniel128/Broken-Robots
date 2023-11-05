@@ -13,7 +13,7 @@ public class UIBossBar : MonoBehaviour
     {
         slider.value = (float)BossCurrentHealth / (float)BossMaxHealth;
     }
-    public void ModifyMana(int NewHealth)
+    public void ModifyHealth(int NewHealth)
     {
         BossCurrentHealth = NewHealth;
     }
