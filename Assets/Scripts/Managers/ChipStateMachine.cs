@@ -79,7 +79,8 @@ public class ChipStateMachine : MonoBehaviour
     {
         if (IsUsingSpecificPatrolPoints)
         {
-            PatrolPoints = SpecificPatrolPoints;
+            PatrolPoints[0] = transform.position + Vector3.right * _patrolRange;
+            PatrolPoints[1] = transform.position + Vector3.left * _patrolRange;
         }
         else
         {

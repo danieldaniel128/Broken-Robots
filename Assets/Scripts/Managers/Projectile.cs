@@ -24,6 +24,7 @@ public class Projectile : MonoBehaviour
     public void InitProjectileValues()
     {
         projectileRigidBody.velocity = Vector3.zero;
+        projectileRigidBody.angularVelocity = Vector3.zero;
     }
 
     public void FireProjectile()

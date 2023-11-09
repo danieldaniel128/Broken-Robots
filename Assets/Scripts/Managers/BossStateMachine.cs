@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Unity.Burst.Intrinsics;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class BossStateMachine : MonoBehaviour
 {
@@ -60,7 +59,23 @@ public class BossStateMachine : MonoBehaviour
 
     float _currentSpeed;
 
-    private void Start()
+
+    [SerializeField] float timerBossFightStart;
+    [SerializeField] GameObject HealthBarCanvas;
+    bool isWaitingForBoss = true;
+    void BossFightCoolDown()
+    {
+        if(isWaitingForBoss)
+        if (timerBossFightStart >= 0)
+            timerBossFightStart -= Time.deltaTime;
+        else
+        {
+                isWaitingForBoss = false;
+                HealthBarCanvas.SetActive(true);
+        }
+    }
+
+        private void Start()
     {
         startPos = transform.position;
         _currentSpeed = _moveSpeed;
@@ -70,6 +85,9 @@ public class BossStateMachine : MonoBehaviour
         //CurrentState.UpdateState(this);
 
         //movement
+        BossFightCoolDown();
+        if (isWaitingForBoss)
+            return;
         Agent.speed = _currentSpeed;
         if (!stopMove)
         {
